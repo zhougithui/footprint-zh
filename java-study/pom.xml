@@ -11,6 +11,7 @@
     <packaging>pom</packaging>
     <artifactId>java-study</artifactId>
     <modules>
+        <module>java-common</module>
         <module>java7-spec</module>
         <module>java8-spec</module>
     </modules>
