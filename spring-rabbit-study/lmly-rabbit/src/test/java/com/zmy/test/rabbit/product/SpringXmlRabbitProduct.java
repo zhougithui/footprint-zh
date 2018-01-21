@@ -7,7 +7,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class SpringXmlRabbitProduct {
     public static void main(final String[] args) throws Exception {
         AbstractApplicationContext ctx =
-                new ClassPathXmlApplicationContext("spring-rabbit-publisher.xml", SpringXmlRabbitProduct.class);
+                new ClassPathXmlApplicationContext("spring-rabbit-publisher.xml");
         ctx.registerShutdownHook();
 
         RabbitTemplate template = ctx.getBean(RabbitTemplate.class);

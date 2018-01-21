@@ -12,7 +12,7 @@ import java.util.concurrent.Executors;
 public class SpringXmlRabbitProduct2 {
     public static void main(final String[] args) throws Exception {
         AbstractApplicationContext ctx =
-                new ClassPathXmlApplicationContext("spring-rabbit-publisher2.xml", SpringXmlRabbitProduct2.class);
+                new ClassPathXmlApplicationContext("spring-rabbit-publisher2.xml");
         ctx.registerShutdownHook();
 
         RabbitTemplate template = ctx.getBean("amqpTemplate", RabbitTemplate.class);
