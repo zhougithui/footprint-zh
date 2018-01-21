@@ -39,8 +39,4 @@
             </exclusions>
         </dependency>
     </dependencies>
-
-    <build>
-        <finalName>java7-spec</finalName>
-    </build>
 </project>

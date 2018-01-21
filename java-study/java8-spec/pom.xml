@@ -39,8 +39,4 @@
             </exclusions>
         </dependency>
     </dependencies>
-
-    <build>
-        <finalName>java8-spec</finalName>
-    </build>
 </project>

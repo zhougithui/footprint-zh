@@ -41,7 +41,6 @@
     </dependencies>
 
     <build>
-        <finalName>java-common</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

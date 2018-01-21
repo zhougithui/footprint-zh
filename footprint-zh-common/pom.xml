@@ -43,8 +43,4 @@
             <artifactId>gson</artifactId>
         </dependency>
     </dependencies>
-
-    <build>
-        <finalName>footprint-zh-common</finalName>
-    </build>
 </project>
