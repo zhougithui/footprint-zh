@@ -1,5 +1,6 @@
-package com.zmy;
+package com.zmy.test;
 
+import com.zmy.RedisUtils;
 import com.zmy.utils.GsonUtils;
 import com.zmy.vo.Student;
 import org.springframework.context.support.ClassPathXmlApplicationContext;

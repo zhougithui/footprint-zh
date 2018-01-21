@@ -1,15 +1,9 @@
 package com.zmy.instrument.test;
 
-import java.io.IOException;
-import java.util.List;
-
-import com.sun.tools.attach.VirtualMachine;
-import com.sun.tools.attach.VirtualMachineDescriptor;
-
 // 一个运行 Attach API 的线程子类
 public class AttachThread extends Thread {
 
-	private final List<VirtualMachineDescriptor> listBefore;
+	/*private final List<VirtualMachineDescriptor> listBefore;
 
 	private final String jar;
 
@@ -57,5 +51,5 @@ public class AttachThread extends Thread {
 		new AttachThread("F:/worksoftware/eclipsejee-neon/workspace/java/instrument/target/instrument-0.0.1-SNAPSHOT.jar", VirtualMachine.list()).start();
 
 	}
-
+*/
 }

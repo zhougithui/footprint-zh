@@ -15,28 +15,27 @@ import org.springframework.stereotype.Component;
 import java.io.UnsupportedEncodingException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 /**
- * redis缓存工具类
+ * jdk7 redis缓存工具类
  * 1、存值可能抛出异常
  * 2、取值不会抛出异常
  * @author hui.zhou 17:28 2018/1/3
  */
 @SuppressWarnings("ALL")
 @Component
-public class RedisUtils {
-    private static final Logger logger = LoggerFactory.getLogger(RedisUtils.class);
+public class Jdk7RedisUtils {
+    private static final Logger logger = LoggerFactory.getLogger(Jdk7RedisUtils.class);
 
     private static RedisTemplate<String, CacheValueWrapper<Object>> redisTemplate;
     private static long DEFAULT_EXPIRE_SECONDS;
     private static TimeUnit DEFAULT_UNIT = TimeUnit.SECONDS;
 
     @Autowired
-    private RedisUtils(RedisTemplate<String, CacheValueWrapper<Object>> redisTemplate,
-                       @Value("${redisExpiredSeconds}") long expireSeconds){
-        RedisUtils.redisTemplate = redisTemplate;
-        RedisUtils.DEFAULT_EXPIRE_SECONDS = expireSeconds;
+    private Jdk7RedisUtils(RedisTemplate<String, CacheValueWrapper<Object>> redisTemplate,
+                           @Value("${redisExpiredSeconds}") long expireSeconds){
+        Jdk7RedisUtils.redisTemplate = redisTemplate;
+        Jdk7RedisUtils.DEFAULT_EXPIRE_SECONDS = expireSeconds;
     }
 
     /**
@@ -83,7 +82,7 @@ public class RedisUtils {
             logger.error("redis缓存操作失败", e);
             return null;
         }
-        CacheValueWrapper<T> val = (CacheValueWrapper<T>)value;
+        CacheValueWrapper<T> val = (CacheValueWrapper<T>) value;
         return Objects.isNull(val) ? null : val.getValue();
     }
 
@@ -122,10 +121,11 @@ public class RedisUtils {
      */
     public static <T> void lputAll(String key, List<T> values){
         try {
-            redisTemplate.opsForList().rightPushAll(key,
-                    values.stream()
-                    .map(value -> wrapper(value))
-                    .collect(Collectors.toCollection(ArrayList::new)));
+            List<CacheValueWrapper<Object>> valuesList = new ArrayList<>();
+            for(T value : values){
+                valuesList.add(wrapper(value));
+            }
+            redisTemplate.opsForList().rightPushAll(key,valuesList);
             expire(key, DEFAULT_EXPIRE_SECONDS, DEFAULT_UNIT);
         } catch (Exception e) {
             logger.error("redis缓存操作失败", e);
@@ -141,10 +141,11 @@ public class RedisUtils {
      */
     public static <T> void lputAll(String key, List<T> values, long expireTime, TimeUnit unit){
         try {
-            redisTemplate.opsForList().rightPushAll(key,
-                    values.stream()
-                    .map(value -> wrapper(value))
-                    .collect(Collectors.toCollection(ArrayList::new)));
+            List<CacheValueWrapper<Object>> valuesList = new ArrayList<>();
+            for(T value : values){
+                valuesList.add(wrapper(value));
+            }
+            redisTemplate.opsForList().rightPushAll(key, valuesList);
             expire(key, expireTime, unit);
         } catch (Exception e) {
             logger.error("redis缓存操作失败", e);
@@ -164,10 +165,14 @@ public class RedisUtils {
                 return null;
             }
             List<CacheValueWrapper<Object>> list = redisTemplate.opsForList().range(key, 0, size);
-            return (List<T>)list.stream().map( value -> {
+
+            List<T> valuesList = new ArrayList<>();
+            for(CacheValueWrapper<Object> value : list){
+                Object val = value.getValue();
                 validateType(value, cls);
-              return value.getValue();
-            }).collect(Collectors.toList());
+                valuesList.add((T) val);
+            }
+            return valuesList;
         } catch (Exception e) {
             logger.error("redis缓存操作失败", e);
             return null;
@@ -182,7 +187,9 @@ public class RedisUtils {
     public static <T> void hmset(String key, Map<String, T> value){
         try {
             Map<String, CacheValueWrapper<Object>> map = new HashMap<>();
-            value.forEach((k, v) -> map.put(k, wrapper(v)));
+            for(String k : value.keySet()){
+                map.put(k, wrapper(value.get(k)));
+            }
             redisTemplate.opsForHash().putAll(key, map);
 
             expire(key, DEFAULT_EXPIRE_SECONDS, DEFAULT_UNIT);
@@ -199,7 +206,9 @@ public class RedisUtils {
     public static <T> void hmset(String key, Map<String, T> value, long expireTime, TimeUnit unit){
         try {
             Map<String, CacheValueWrapper<Object>> map = new HashMap<>();
-            value.forEach((k, v) -> map.put(k, wrapper(v)));
+            for(String k : value.keySet()){
+                map.put(k, wrapper(value.get(k)));
+            }
             redisTemplate.opsForHash().putAll(key, map);
 
             expire(key, expireTime, unit);
@@ -221,10 +230,11 @@ public class RedisUtils {
             Map<Object, Object> map = redisTemplate.opsForHash().entries(key);
 
             Map<K, V> result = new HashMap<>();
-            map.forEach((k, v) -> {
-                validateType((CacheValueWrapper<Object>) v, cls);
-                result.put((K)k, ((CacheValueWrapper<V>)v).getValue());
-            });
+            for(Object k : map.keySet()){
+                CacheValueWrapper<Object> cacheVal = (CacheValueWrapper<Object>)map.get(k);
+                validateType(cacheVal, cls);
+                result.put((K)k, (V)cacheVal.getValue());
+            }
             return result;
         } catch (Exception e) {
             logger.error("redis缓存操作失败", e);
@@ -267,12 +277,14 @@ public class RedisUtils {
      */
     public static <T> void saddAll(String key, Set<T> values){
         try {
-            redisTemplate.opsForSet().add(key,
-                    values.stream()
-                            .map(value -> wrapper(value))
-                            .collect(Collectors.toList())
-                            .toArray(new CacheValueWrapper[]{})
-            );
+            CacheValueWrapper[] valueArr = new CacheValueWrapper[values.size()];
+            int count = 0;
+            for(T value : values){
+                valueArr[count] = wrapper(value);
+                count++;
+            }
+            redisTemplate.opsForSet().add(key,valueArr);
+
             expire(key, DEFAULT_EXPIRE_SECONDS, DEFAULT_UNIT);
         } catch (Exception e) {
             logger.error("redis缓存操作失败", e);
@@ -286,12 +298,14 @@ public class RedisUtils {
      */
     public static <T> void saddAll(String key, Set<T> values, long expireTime, TimeUnit unit){
         try {
-            redisTemplate.opsForSet().add(key,
-                    values.stream()
-                            .map(value -> wrapper(value))
-                            .collect(Collectors.toList())
-                            .toArray(new CacheValueWrapper[]{})
-            );
+            CacheValueWrapper[] valueArr = new CacheValueWrapper[values.size()];
+            int count = 0;
+            for(T value : values){
+                valueArr[count] = wrapper(value);
+                count++;
+            }
+            redisTemplate.opsForSet().add(key, valueArr);
+
             expire(key, expireTime, unit);
         } catch (Exception e) {
             logger.error("redis缓存操作失败", e);
@@ -307,13 +321,13 @@ public class RedisUtils {
      */
     public static <T> Set<T> smenbers(String key, Class<T> cls){
         try {
-            return (Set<T>)redisTemplate.opsForSet().members(key)
-                    .stream()
-                    .map(val -> {
-                        validateType(val, cls);
-                        return val.getValue();
-                    })
-                    .collect(Collectors.toSet());
+            Set<T> valueSet = new HashSet<>();
+            Set<CacheValueWrapper<Object>> values = redisTemplate.opsForSet().members(key);
+            for(CacheValueWrapper<Object> value : values){
+                validateType(value, cls);
+                valueSet.add((T) value.getValue());
+            }
+            return valueSet;
         } catch (Exception e) {
             logger.error("redis缓存操作失败", e);
             return null;
