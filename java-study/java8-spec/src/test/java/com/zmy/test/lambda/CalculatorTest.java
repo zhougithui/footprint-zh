@@ -17,6 +17,8 @@ public class CalculatorTest {
         //加法
         Calculator calculator = (a, b) -> a + b;
         System.out.println(calculator.compulate(1, 2));
+        System.out.println(calculator.compulateDefault(1, 2));
+        System.out.println(Calculator.compulateStatic(2,3));
 
         //乘法
         calculator = (a, b) -> a * b;
