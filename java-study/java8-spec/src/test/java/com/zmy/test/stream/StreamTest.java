@@ -1,4 +1,4 @@
-package com.zmy.stream;
+package com.zmy.test.stream;
 
 import java.util.*;
 import java.util.stream.Collectors;
