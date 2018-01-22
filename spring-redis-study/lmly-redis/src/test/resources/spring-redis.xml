@@ -26,7 +26,11 @@
             </bean>
         </property>
         <property name="database" value="${redisDatabase}"/>
-        <property name="password" value="${redisPassword}"/>
+        <property name="password">
+            <bean class="org.springframework.data.redis.connection.RedisPassword">
+                <constructor-arg name="thePassword" value="${redisPassword}"/>
+            </bean>
+        </property>
     </bean>
 
     <!-- jedis pool配置 -->

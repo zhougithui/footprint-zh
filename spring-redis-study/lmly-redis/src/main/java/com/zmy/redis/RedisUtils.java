@@ -215,7 +215,7 @@ public class RedisUtils {
      * @param <V>
      * @return
      */
-    public static <K, V> Map<K, V> hgetAll(String key, Class<? extends Map> cls){
+    public static <K, V> Map<K, V> hgetAll(String key, Class<V> cls){
         try {
             Map<Object, Object> map = redisTemplate.opsForHash().entries(key);
 
@@ -388,7 +388,16 @@ public class RedisUtils {
      * @param <T>
      */
     private static <T> void validateType(CacheValueWrapper<Object> cacheVal, Class<T> cls) {
-        if(!cls.isInstance(cacheVal.getValue())){
+        if(("int".equals(cls.getName()) && Integer.class.isInstance(cacheVal.getValue()))
+                || ("double".equals(cls.getName()) && Double.class.isInstance(cacheVal.getValue()))
+                || ("float".equals(cls.getName()) && Float.class.isInstance(cacheVal.getValue()))
+                || ("byte".equals(cls.getName()) && Byte.class.isInstance(cacheVal.getValue()))
+                || ("boolean".equals(cls.getName()) && Boolean.class.isInstance(cacheVal.getValue()))
+                || ("long".equals(cls.getName()) && Long.class.isInstance(cacheVal.getValue()))
+                || ("short".equals(cls.getName()) && Short.class.isInstance(cacheVal.getValue()))
+            ){
+
+        }else if(!cls.isInstance(cacheVal.getValue())){
             throw new IllegalArgumentException("类型不匹配,需要序列化的class="
                     + cls.getName() + ",实际数据class=" + cacheVal.getClassName());
         }
