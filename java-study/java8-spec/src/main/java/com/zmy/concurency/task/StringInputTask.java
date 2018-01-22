@@ -1,7 +1,7 @@
 package com.zmy.concurency.task;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.CountDownLatch;
 
@@ -9,7 +9,7 @@ import java.util.concurrent.CountDownLatch;
  * String 处理任务
  */
 public abstract class StringInputTask implements Task<String, String> {
-    private transient static final Log LOG = LogFactory.getLog(StringInputTask.class);
+    private final Logger logger = LoggerFactory.getLogger(getClass());
     private final String taskName;
 
     public StringInputTask(final String taskName) {
@@ -25,7 +25,7 @@ public abstract class StringInputTask implements Task<String, String> {
         } catch (final InterruptedException e) {
             e.printStackTrace();
         }
-        LOG.debug("Done: " + taskName);
+        logger.debug("Done: " + taskName);
         latch.countDown();
         return  String.format("Task %s - %s - complete - Yay!", taskName, input);
     }
