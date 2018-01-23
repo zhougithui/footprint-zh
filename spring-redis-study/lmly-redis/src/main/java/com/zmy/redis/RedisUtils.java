@@ -3,13 +3,10 @@ package com.zmy.redis;
 import com.zmy.redis.container.CacheValueWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.stereotype.Component;
 
 import java.io.UnsupportedEncodingException;
 import java.util.*;
@@ -18,24 +15,30 @@ import java.util.stream.Collectors;
 
 /**
  * redis缓存工具类
- * 1、存值可能抛出异常
- * 2、取值不会抛出异常
  * @author hui.zhou 17:28 2018/1/3
  */
 @SuppressWarnings("ALL")
-@Component
 public class RedisUtils {
     private static final Logger logger = LoggerFactory.getLogger(RedisUtils.class);
 
     private static RedisTemplate<String, CacheValueWrapper<Object>> redisTemplate;
-    private static long DEFAULT_EXPIRE_SECONDS;
+    private static long DEFAULT_EXPIRE_SECONDS = 10000;
     private static TimeUnit DEFAULT_UNIT = TimeUnit.SECONDS;
 
-    @Autowired
-    private RedisUtils(RedisTemplate<String, CacheValueWrapper<Object>> redisTemplate,
-                       @Value("${redisExpiredSeconds}") long expireSeconds){
+    public static RedisTemplate<String, CacheValueWrapper<Object>> getRedisTemplate() {
+        return redisTemplate;
+    }
+
+    public static void setRedisTemplate(RedisTemplate<String, CacheValueWrapper<Object>> redisTemplate) {
         RedisUtils.redisTemplate = redisTemplate;
-        RedisUtils.DEFAULT_EXPIRE_SECONDS = expireSeconds;
+    }
+
+    /**
+     * 设置默认的过期时间
+     * @param expireTime
+     */
+    public static void setExpireTime(long expireTime) {
+        RedisUtils.DEFAULT_EXPIRE_SECONDS = expireTime;
     }
 
     /**
