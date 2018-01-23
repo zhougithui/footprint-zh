@@ -1,8 +1,14 @@
 package com.zmy.test.time;
 
+import org.junit.Test;
+
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
+import java.util.Locale;
 
 /**
  * 日期类
@@ -14,7 +20,11 @@ import java.time.ZoneId;
  * @author hui.zhou 15:13 2018/1/23
  */
 public class LocalDateTest {
-    public static void main(String[] args) {
+    /**
+     * 创建日期
+     */
+    @Test
+    public void testCreate(){
         /**
          * 默认日期格式yyyy-MM-dd，与java.util.Date不一样，重写了toString方法
          */
@@ -46,12 +56,61 @@ public class LocalDateTest {
          * 获取从01/01/1970开始的日期
          */
         LocalDate dateFromBase = LocalDate.ofEpochDay(365);
-        System.out.println("01/01/1970 + 365天= " + dateFromBase);
+        System.out.println("01/01/1970 + 365天=" + dateFromBase);
 
         /**
          * 指定年份的第多少天
          */
-        LocalDate hundredDay2014 = LocalDate.ofYearDay(2018, 100);
-        System.out.println("2018年的第100天= " + hundredDay2014);
+        LocalDate hundredDay2018 = LocalDate.ofYearDay(2018, 100);
+        System.out.println("2018年的第100天= " + hundredDay2018);
     }
+
+    /**
+     * 解析日期字符串
+     */
+    @Test
+    public void testParse(){
+        System.out.println(LocalDate.parse("2018-01-23"));
+        System.out.println(LocalDate.parse("2018/01/23", DateTimeFormatter.ofPattern("yyyy/MM/dd")));
+        System.out.println(LocalDate.parse("2018/01/23", DateTimeFormatter.ofPattern("yyyy/MM/dd", Locale.CHINA)));
+    }
+
+    /**
+     * 日期转换
+     */
+    @Test
+    public void testManipulate(){
+        LocalDate today = LocalDate.now();
+
+        // 取本月第1天：
+        LocalDate firstDayOfThisMonth = today.with(TemporalAdjusters.firstDayOfMonth());
+        System.out.println(firstDayOfThisMonth);
+
+        System.out.println("--------------分割线--------------");
+        // 取本月第2天：
+        LocalDate secondDayOfThisMonth = today.withDayOfMonth(2);
+        System.out.println(secondDayOfThisMonth);
+
+        // 取本月最后一天，再也不用计算是28，29，30还是31：
+        LocalDate lastDayOfThisMonth = today.with(TemporalAdjusters.lastDayOfMonth());
+        System.out.println(lastDayOfThisMonth);
+
+        System.out.println("--------------分割线--------------");
+        // 取下一天：
+        LocalDate firstDayOf = lastDayOfThisMonth.plusDays(1);
+        System.out.println(firstDayOf);
+        // 取2015年1月第一个周一，这个计算用Calendar要死掉很多脑细胞：
+        LocalDate firstMondayOf2015 = LocalDate.parse("2015-01-01").with(TemporalAdjusters.firstInMonth(DayOfWeek.MONDAY)); // 2015-01-05
+        System.out.println(firstMondayOf2015);
+    }
+
+    /**
+     * 日期常量
+     */
+    @Test
+    public void testConstants(){
+        System.out.println(LocalDate.MAX);
+        System.out.println(LocalDate.MIN);
+    }
+
 }
