@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
+ * 新Stream接口
  * @author hui.zhou 8:55 2018/1/4
  */
 public class StreamTest {
