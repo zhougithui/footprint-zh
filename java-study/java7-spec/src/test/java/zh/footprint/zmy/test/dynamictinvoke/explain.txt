@@ -1,0 +1,63 @@
+1、动态语言以JavaScript为例
+function Output() {
+}
+Output.prototype.println = function(_value) {
+    console.info(_value);//FireFox中
+}
+//执行语句
+var output = new Output();
+output.println()
+
+在上述代码中，Output类型对象有一个println方法，而在实际运行中，
+变量output却不一定非得是Output类型。只要output变量指向的对象(方法的接收者)
+上有println方法就可以，而不管接收者到底是什么类型。
+
+2、在Java中，以最有名的HelloWorld为例
+public static void main(String[] args) {
+    System.out.println("HelloWorld");
+}
+
+System.out被声明为java.io.PrintStream类型，
+所以System.out对象就必须是java.io.PrintStream类型或者java.io.PrintStream的子类。
+这里你也许会话，这不对真正类型也是可以改变的嘛。的确，
+但是这个“改变”却有很大的限制，对象真实类型必须是声明类型或者声明类型的子类型，
+这个是语言多态性最基础的保证。
+而JDK7对动态性的支持希望做到的是类型JavaScript中一样，对象的真实类型由运行期确定。
+
+
+
+你会发现这时候，无论receiver是什么类型的对象，只要其有一个名为println带一个参数的方法，程序就可以运行，这样就可以实现方法接收者的动态确定。
+从上面的例子看来，Java动态性使用很简单，不过看完它的用法之后，大家也许会有疑问，相同的事情，用反射不是早就可以实现了吗？确实，
+仅站在Java语言的角度看，MethodHandle的使用方法和效果上与Reflection都有众多相似之处。不过，它们也有以下这些区别：
+1. Reflection和MethodHandle机制本质上都是在模拟方法调用，但是Reflection是在模拟Java代码层次的方法调用，
+    而MethodHandle是在模拟字节码层次的方法调用。在MethodHandles.Lookup上的
+    三个方法findStatic()、findVirtual()、findSpecial()正是为了
+    对应于invokestatic、invokevirtual & invokeinterface和invokespecial
+    这几条字节码指令的执行权限校验行为，而这些底层细节在使用Reflection API时是不需要关心的。
+
+2. Reflection中的java.lang.reflect.Method对象远比MethodHandle机制中的java.lang.invoke.MethodHandle对象所包含的信息来得多。
+    前者是方法在Java一端的全面映像，包含了方法的签名、描述符以及方法属性表中各种属性的Java端表示方式，
+    还包含有执行权限等的运行期信息。
+    而后者仅仅包含着与执行该方法相关的信息。用开发人员通俗的话来讲，Reflection是重量级，而MethodHandle是轻量级。
+
+3. 由于MethodHandle是对字节码的方法指令调用的模拟，理论上虚拟机在这方面做的各种优化（如方法内联），
+    在MethodHandle上也应当可以采用类似思路去支持（但目前实现还不完善）。
+    而通过反射去调用方法则不行。
+    MethodHandle与Reflection除了上面列举的区别外，
+    最关键的一点还在于去掉前面讨论施加的前提“仅站在Java语言的角度看”之后：
+    Reflection API的设计目标是只为Java语言服务的，而MethodHandle则设计为可服务于所有Java虚拟机之上的语言，其中也包括了Java语言而已。
+
+在JDK7以前，用于方法调用的字节码指令只有invokeinterface、invokestatic、invokespecial、invokevitual四个，
+这四个指令的具体含义与行为可以参看具体资料，最权威的当然是Java虚拟机规范。这四个指令方法调用时概括有4个要素：
+    1.方法名称：要调用的方法的名称一般是由开发人员在源代码中指定的符号名称。这个名称同样会出现在编译之后的字节代码中。
+    2.链接：链接包含了要调用方法的类。这一步有可能会涉及类的加载。
+    3.选择：选择要调用的方法。在类中根据方法名称和参数选择要调用的方法。
+    4.适配：调用者和接收者对调用的方式达成一致，即对方法的类型声明达成共识。
+    确定了上面4个要素之后，Java虚拟机会把控制权转移到被调用的方法中，并把调用时的实际参数传递过去。
+
+jdk7后增加的invokedynamic指令放宽了方法调用的限制，提升了方法调用的灵活性，以上面方法调用的四个要素来说明：
+    1.在方法的名称方面，不一定是符合Java命名规范的字符串，可以任意指定。方法的调用者和提供者也不需要在方法名称上达成一致。
+    2.提供了更加灵活的链接方式。一个方法调用所实际调用的方法可以在运行时再确定。这就相当于把链接操作推迟到了运行时，
+        而不是必须在编译时就确定下来。对于一个已经链接好的方法调用，也可以重新进行链接，让它指向另外的方法。
+    3.在方法选择方面，不再是只能在方法调用的接收者上进行发派，而是可以考虑所有调用时的参数，即支持方法的多派发。
+    4.在调用之前，可以对参数进行各种不同的处理，包括类型转换、添加和删除参数、收集和分发可变长度参数等。
