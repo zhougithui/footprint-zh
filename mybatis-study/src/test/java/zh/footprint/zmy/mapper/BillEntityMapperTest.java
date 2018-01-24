@@ -1,6 +1,7 @@
 package zh.footprint.zmy.mapper;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -44,4 +45,11 @@ public class BillEntityMapperTest {
         System.out.println(mapper.selectByPrimaryKey(51l).getBillDate());
     }
 
+    @Test
+    public void testUpdate(){
+        BillEntity entity = mapper.selectByPrimaryKey(51l);
+        entity.setBillStatus("FAILD");
+        int updateCount = mapper.updateByPrimaryKeySelective(entity);
+        Assert.assertEquals(1, updateCount);
+    }
 }
