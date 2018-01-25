@@ -160,15 +160,17 @@ public class CollectorTest {
                                 return "青年人";
                         },
                         Collectors.counting()));
+
+        result.forEach((k, v) -> System.out.println(k + "-" + v));
     }
 
     @Test
-    public void testConver(){
-        /*Map<String,Integer> map = perList.stream()
+    public void testConvert(){
+        Map<String, Person> map = perList.stream()
                 .collect(Collectors.groupingBy(Person::getName,
                         Collectors.collectingAndThen(
                                 Collectors.maxBy(Comparator.comparingInt(Person::getAge)),
                                 Optional::get
-                        )));*/
+                        )));
     }
 }
