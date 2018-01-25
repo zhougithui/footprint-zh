@@ -10,6 +10,8 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 /**
  * 收集器使用
@@ -115,10 +117,11 @@ public class CollectorTest {
         Integer age = perList.stream()
                 .collect(Collectors.reducing(0,Person::getAge,(i,j)->i+j));
 
-        /*Optional<Integer> sumAge = perList.stream()
+        Integer integer = perList.stream()
                 .filter(Person::isFemale)
                 .mapToInt(Person::getAge)
-                .collect(Collectors.reducing((i,j)->i+j));*/
+                .collect(() -> 0, (i, j) -> System.out.println(i + j), (i, j) -> System.out.println());
+        System.out.println(integer);
     }
 
     /**

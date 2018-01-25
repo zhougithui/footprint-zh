@@ -2,7 +2,7 @@ package com.zmy.test.common;
 
 import java.time.LocalDate;
 
-public class Person {
+public class Person implements Comparable<Person> {
     private String name;
     private LocalDate birthday;
     private boolean female;
@@ -38,5 +38,10 @@ public class Person {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    @Override
+    public int compareTo(Person o) {
+        return -getName().compareTo(o.getName());
     }
 }

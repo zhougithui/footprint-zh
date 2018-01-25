@@ -1,6 +1,6 @@
 package com.zmy.utils;
 
-import com.sun.deploy.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
  */
 public final class PathUtils {
     public static void main(String[] args) {
-        Arrays.stream(StringUtils.splitString(classPathOfAll(), ";"))
+        Arrays.stream(StringUtils.split(classPathOfAll(), ";"))
                 .forEach(System.out::println);
     }
 
