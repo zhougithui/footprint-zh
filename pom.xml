@@ -866,15 +866,18 @@
                 </includes>
                 <filtering>false</filtering>
             </resource>
-            <resource>
+        </resources>
+        <testResources>
+            <testResource>
                 <directory>${basedir}/src/test/java</directory>
                 <includes>
                     <include>**/*.properties</include>
                     <include>**/*.xml</include>
+                    <include>**/*.txt</include>
                 </includes>
                 <filtering>false</filtering>
-            </resource>
-        </resources>
+            </testResource>
+        </testResources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

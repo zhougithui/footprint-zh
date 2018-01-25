@@ -16,5 +16,27 @@
         <module>java8-spec</module>
     </modules>
 
-
+    <build>
+        <resources>
+            <resource>
+                <directory>${basedir}/src/main/java</directory>
+                <includes>
+                    <include>**/*.properties</include>
+                    <include>**/*.xml</include>
+                </includes>
+                <filtering>false</filtering>
+            </resource>
+        </resources>
+        <testResources>
+            <testResource>
+                <directory>${basedir}/src/test/java</directory>
+                <includes>
+                    <include>**/*.properties</include>
+                    <include>**/*.xml</include>
+                    <include>**/*.txt</include>
+                </includes>
+                <filtering>false</filtering>
+            </testResource>
+        </testResources>
+    </build>
 </project>
