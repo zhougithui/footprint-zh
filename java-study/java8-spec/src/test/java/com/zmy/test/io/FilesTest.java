@@ -2,7 +2,7 @@ package com.zmy.test.io;
 
 import com.zmy.constants.CommonConstants;
 import com.zmy.utils.FpStringBuilder;
-import com.zmy.utils.ProjectPathUtils;
+import com.zmy.utils.PathUtils;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -20,18 +20,18 @@ public class FilesTest {
     @Before
     public void init(){
         filePath = FpStringBuilder.buildDefault()
-                .append(ProjectPathUtils.projectPath())
+                .append(PathUtils.projectPath())
                 .append(File.separator)
                 .append(CommonConstants.TEST_SRC_PATH)
                 .append(File.separator)
-                .append(ProjectPathUtils.packageToPath(FilesTest.class))
+                .append(PathUtils.packageToPath(FilesTest.class))
                 .append(CommonConstants.JAVA_SUFFIX).toString();
         testTxtPath = FpStringBuilder.buildDefault()
-                .append(ProjectPathUtils.projectPath())
+                .append(PathUtils.projectPath())
                 .append(File.separator)
                 .append(CommonConstants.TEST_SRC_PATH)
                 .append(File.separator)
-                .append(ProjectPathUtils.packageToPath(FilesTest.class))
+                .append(PathUtils.packageToPath(FilesTest.class))
                 .append(".txt").toString();
     }
 
@@ -42,7 +42,7 @@ public class FilesTest {
     @Test
     public void testList() throws IOException {
         //遍历文件夹
-        Files.list(new File(ProjectPathUtils.pathOfClass(FilesTest.class)).toPath()).forEach(System.out::println);
+        Files.list(new File(PathUtils.pathOfClass(FilesTest.class)).toPath()).forEach(System.out::println);
     }
 
     /**
@@ -124,7 +124,7 @@ public class FilesTest {
     @Test
     public void testWalk(){
         try {
-            Files.walk(Paths.get(ProjectPathUtils.projectPath()), 8, FileVisitOption.FOLLOW_LINKS)
+            Files.walk(Paths.get(PathUtils.projectPath()), 8, FileVisitOption.FOLLOW_LINKS)
                 .forEach(System.out::println);
         } catch (IOException e) {
             e.printStackTrace();
@@ -138,7 +138,7 @@ public class FilesTest {
     public void testFind(){
         try {
             Files.find(
-                    Paths.get(ProjectPathUtils.projectPath()),
+                    Paths.get(PathUtils.projectPath()),
                     8,
                     (path, fileAttributes) -> fileAttributes.isRegularFile() && path.toString().endsWith(CommonConstants.JAVA_SUFFIX),
                     FileVisitOption.FOLLOW_LINKS).forEach(System.out::println);

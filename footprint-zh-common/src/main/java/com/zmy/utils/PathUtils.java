@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
  * 工程路径工具类
  * @author hui.zhou 9:10 2018/1/25
  */
-public final class ProjectPathUtils {
+public final class PathUtils {
     public static void main(String[] args) {
         Arrays.stream(StringUtils.splitString(classPathOfAll(), ";"))
                 .forEach(System.out::println);
@@ -24,7 +24,7 @@ public final class ProjectPathUtils {
      * @return
      */
     public static String rootClassPath(){
-        return ProjectPathUtils.class.getResource("/").getPath();
+        return PathUtils.class.getResource("/").getPath();
     }
 
     /**
@@ -33,7 +33,7 @@ public final class ProjectPathUtils {
      * @return
      */
     public static URL rootClassPathURL(){
-        return ProjectPathUtils.class.getResource("/");
+        return PathUtils.class.getResource("/");
     }
 
     /**

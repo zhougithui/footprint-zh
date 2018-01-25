@@ -1,6 +1,6 @@
 package zh.footprint.zmy.test.io;
 
-import com.zmy.utils.ProjectPathUtils;
+import com.zmy.utils.PathUtils;
 import org.junit.Test;
 
 import java.nio.file.Paths;
@@ -12,6 +12,6 @@ public class PathTest {
 
     @Test
     public void testGet(){
-        System.out.println(Paths.get(ProjectPathUtils.projectPath()));
+        System.out.println(Paths.get(PathUtils.projectPath()));
     }
 }
