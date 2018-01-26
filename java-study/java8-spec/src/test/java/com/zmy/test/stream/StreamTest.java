@@ -119,7 +119,7 @@ public class StreamTest {
      */
     @Test
     public void testMap(){
-        List<String> nameList = perList.stream().map(Person::getName).collect(Collectors.toList());
+        List<String> nameList = perList.stream().filter((t)-> t.getAge() > 100).map(Person::getName).filter((a)->a.startsWith("h")).collect(Collectors.toList());
         nameList.forEach(System.out::println);
     }
 
