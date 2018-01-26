@@ -1,4 +1,4 @@
-package com.zmy.methodref;
+package com.zmy.ref;
 
 import java.util.function.Supplier;
 

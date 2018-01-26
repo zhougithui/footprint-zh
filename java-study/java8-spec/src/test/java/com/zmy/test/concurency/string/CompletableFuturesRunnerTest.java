@@ -12,7 +12,6 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Test
- * Created by brian on 4/26/14.
  */
 public class CompletableFuturesRunnerTest {
 

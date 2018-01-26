@@ -1,6 +1,6 @@
 package com.zmy.test.methodref;
 
-import com.zmy.methodref.Car;
+import com.zmy.ref.Car;
 
 import java.util.Arrays;
 import java.util.List;
