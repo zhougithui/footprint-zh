@@ -1,6 +1,5 @@
 package com.zmy.test.utils;
 
-import javax.swing.text.html.Option;
 import java.math.BigDecimal;
 import java.util.Optional;
 
@@ -58,5 +57,8 @@ public class OptionalTest {
          */
         Optional<BigDecimal> bigDecimal = optional.map(t -> BigDecimal.TEN);
         System.out.println(bigDecimal.get());
+
+
+        System.out.println(Optional.empty().orElse(null));
     }
 }
