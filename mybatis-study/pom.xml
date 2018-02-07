@@ -14,5 +14,6 @@
     <url>http://maven.apache.org</url>
     <modules>
         <module>mybatis-spring</module>
+        <module>mybatis-generator</module>
     </modules>
 </project>
