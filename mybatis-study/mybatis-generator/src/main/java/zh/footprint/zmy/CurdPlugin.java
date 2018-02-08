@@ -5,14 +5,15 @@ import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.Document;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
-import org.mybatis.generator.config.GeneratedKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class MyPlugin extends PluginAdapter {
+/**
+ * 覆盖增删改查生成Plugin
+ */
+public class CurdPlugin extends PluginAdapter {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     /** 
@@ -20,9 +21,7 @@ public class MyPlugin extends PluginAdapter {
      */  
     @Override  
     public boolean sqlMapDocumentGenerated(Document document, IntrospectedTable introspectedTable) {
-        logger.info("增加自定义sql");
-        String tableName = introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime();// 数据库表名
-        List<IntrospectedColumn> columns = introspectedTable.getAllColumns();
+        String tableName = introspectedTable.getTableConfiguration().getTableName();// 数据库表名
         XmlElement parentElement = document.getRootElement();
           
         // 添加序列
@@ -33,7 +32,12 @@ public class MyPlugin extends PluginAdapter {
 
         //自定义插入
         InsertElementGenerator.addElements(parentElement, introspectedTable, context);
-        return super.sqlMapDocumentGenerated(document, introspectedTable);  
+        InsertSelectiveElementGenerator.addElements(parentElement, introspectedTable, context);
+        DeleteByPrimaryKeyElementGenerator.addElements(parentElement, introspectedTable, context);
+        UpdateByPrimaryKeyWithoutBLOBsElementGenerator.addElements(parentElement, introspectedTable, context);
+        UpdateByPrimaryKeySelectiveElementGenerator.addElements(parentElement, introspectedTable, context);
+        SimpleSelectByPrimaryKeyElementGenerator.addElements(parentElement, introspectedTable, context);
+        return super.sqlMapDocumentGenerated(document, introspectedTable);
     }
 
     @Override
@@ -43,37 +47,37 @@ public class MyPlugin extends PluginAdapter {
 
     @Override
     public boolean sqlMapInsertSelectiveElementGenerated(XmlElement element, IntrospectedTable introspectedTable) {
-        return super.sqlMapInsertSelectiveElementGenerated(element, introspectedTable);
+        return false;
     }
 
     @Override
     public boolean sqlMapDeleteByPrimaryKeyElementGenerated(XmlElement element, IntrospectedTable introspectedTable) {
-        return super.sqlMapDeleteByPrimaryKeyElementGenerated(element, introspectedTable);
+        return false;
     }
 
     @Override
     public boolean sqlMapUpdateByPrimaryKeyWithoutBLOBsElementGenerated(XmlElement element,
                                                                         IntrospectedTable introspectedTable) {
-        return true;
+        return false;
     }
 
     @Override
     public boolean sqlMapUpdateByPrimaryKeySelectiveElementGenerated(XmlElement element, IntrospectedTable introspectedTable) {
-        return super.sqlMapUpdateByPrimaryKeySelectiveElementGenerated(element, introspectedTable);
+        return false;
+    }
+
+    @Override
+    public boolean sqlMapSelectByPrimaryKeyElementGenerated(XmlElement element, IntrospectedTable introspectedTable) {
+        return false;
     }
 
     public boolean validate(List<String> arg0) {
         return true;  
     }
 
-
-    public static void generate() {
-        String config = MyPlugin.class.getClassLoader().getResource("generatorConfig-main.xml").getFile();
-        String[] arg = { "-configfile", config, "-overwrite" };  
-        ShellRunner.main(arg);  
-    }  
-  
-    public static void main(String[] args) {  
-        generate();  
+    public static void main(String[] args) {
+        String config = CurdPlugin.class.getClassLoader().getResource("generatorConfig-main.xml").getFile();
+        String[] arg = { "-configfile", config, "-overwrite" };
+        ShellRunner.main(arg);
     }  
 }  

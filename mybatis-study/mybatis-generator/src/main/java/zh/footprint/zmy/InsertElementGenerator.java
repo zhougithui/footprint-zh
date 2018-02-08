@@ -12,27 +12,10 @@ import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.mybatis3.ListUtilities;
 import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
-import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.AbstractXmlElementGenerator;
 import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.GeneratedKey;
 
 public class InsertElementGenerator {
-
-    private static XmlElement getSelectKey(IntrospectedColumn introspectedColumn,
-                                      GeneratedKey generatedKey) {
-        String identityColumnType = introspectedColumn
-                .getFullyQualifiedJavaType().getFullyQualifiedName();
-
-        XmlElement answer = new XmlElement("selectKey"); //$NON-NLS-1$
-        answer.addAttribute(new Attribute("resultType", identityColumnType)); //$NON-NLS-1$
-        answer.addAttribute(new Attribute(
-                "keyProperty", introspectedColumn.getJavaProperty())); //$NON-NLS-1$
-        answer.addAttribute(new Attribute("order", "BEFORE"));
-
-        answer.addElement(new TextElement("select <include refid=\"TABLE_SEQUENCE\" /> from dual"));
-
-        return answer;
-    }
 
     public static void addElements(XmlElement parentElement,
                             IntrospectedTable introspectedTable,
@@ -58,14 +41,13 @@ public class InsertElementGenerator {
                     .getColumn(gk.getColumn());
             answer.addAttribute(new Attribute(
                     "useGeneratedKeys", "false"));
-            answer.addElement(getSelectKey(introspectedColumn, gk));
+            answer.addElement(SelectKeyUtils.getSelectKey(introspectedColumn, gk));
         }
 
         StringBuilder insertClause = new StringBuilder();
 
         insertClause.append("insert into "); //$NON-NLS-1$
-        insertClause.append(introspectedTable
-                .getFullyQualifiedTableNameAtRuntime());
+        insertClause.append(introspectedTable.getTableConfiguration().getTableName());
         insertClause.append(" ( ID,"); //$NON-NLS-1$
 
         StringBuilder valuesClause = new StringBuilder();
