@@ -87,6 +87,7 @@ public class UpdateByPrimaryKeyWithoutBLOBsElementGenerator {
             sb.append(" = "); //$NON-NLS-1$
             sb.append(MyBatis3FormattingUtilities
                     .getParameterClause(introspectedColumn));
+            sb.append(" and VERSION = #{version,jdbcType=NUMERIC}");
             answer.addElement(new TextElement(sb.toString()));
         }
 
