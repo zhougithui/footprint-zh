@@ -10,10 +10,10 @@
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
     <modules>
-        <module>dubbo-consumer</module>
-        <module>dubbo-provider</module>
+        <module>elasticsearch-facade</module>
+        <module>elasticsearch-service</module>
     </modules>
-    <artifactId>dubbo-study</artifactId>
+    <artifactId>elasticsearch-study</artifactId>
 
 
 </project>

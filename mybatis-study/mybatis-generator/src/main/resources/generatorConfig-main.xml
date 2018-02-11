@@ -35,6 +35,14 @@
       <columnOverride column="DAILY_DATE" javaType="java.util.Date"  jdbcType="DATE"/>
     </table>
 
+    <table schema="LMLY_EC" tableName="T_AUTH_RECORD" domainObjectName="AuthRecordEntity"
+           enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+           enableUpdateByExample="false">
+      <generatedKey column="ID" sqlStatement="JDBC" identity="true"/>
+      <columnOverride column="ID" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+      <columnOverride column="VERSION" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+    </table>
+
 
   </context>
 </generatorConfiguration>
