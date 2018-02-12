@@ -25,7 +25,7 @@
      <javaClientGenerator type="XMLMAPPER" targetPackage="mybatis" targetProject="D:\worksoft\IntelliJIDEA\workspace\footprint-zh\mybatis-study\mybatis-generator\src\main\resources">
     </javaClientGenerator>
 
-    <table schema="LMLY_EC" tableName="T_BDI_PAY_COMPANY_DAILY" domainObjectName="BdiPayCompanyEntity"
+    <!--<table schema="LMLY_EC" tableName="T_BDI_PAY_COMPANY_DAILY" domainObjectName="BdiPayCompanyEntity"
            enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
            enableUpdateByExample="false">
       <generatedKey column="ID" sqlStatement="JDBC" identity="true"/>
@@ -42,7 +42,14 @@
       <columnOverride column="ID" javaType="java.lang.Long" jdbcType="NUMERIC"/>
       <columnOverride column="VERSION" javaType="java.lang.Long" jdbcType="NUMERIC"/>
     </table>
-
+-->
+    <table schema="LMLY_EC" tableName="T_BILL" domainObjectName="BillEntity"
+           enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+           enableUpdateByExample="false">
+      <generatedKey column="ID" sqlStatement="JDBC" identity="true"/>
+      <columnOverride column="ID" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+      <columnOverride column="VERSION" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+    </table>
 
   </context>
 </generatorConfiguration>

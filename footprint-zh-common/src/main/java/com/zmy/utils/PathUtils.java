@@ -20,11 +20,11 @@ public final class PathUtils {
 
     /**
      * 获取classpath路径
-     * /D:/worksoft/IntelliJIDEA/workspace/footprint-zh/footprint-zh-common/target/classes
+     * D:/worksoft/IntelliJIDEA/workspace/footprint-zh/footprint-zh-common/target/classes
      * @return
      */
     public static String rootClassPath(){
-        return PathUtils.class.getResource("/").getPath();
+        return PathUtils.class.getResource("/").getPath().substring(1);
     }
 
     /**
@@ -43,7 +43,7 @@ public final class PathUtils {
      * @return
      */
     public static String pathOfClass(Class<?> cls){
-        return cls.getResource("").getPath();
+        return cls.getResource("").getPath().substring(1);
     }
 
     /**
