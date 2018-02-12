@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 覆盖增删改查生成Plugin
@@ -75,9 +76,19 @@ public class CurdPlugin extends PluginAdapter {
         return true;  
     }
 
+    /**
+     * 生成mapper xml文件并替换项目现有
+     * @param args
+     */
     public static void main(String[] args) {
+        //生成新的mapper文件
         String config = CurdPlugin.class.getClassLoader().getResource("generatorConfig-main.xml").getFile();
         String[] arg = { "-configfile", config, "-overwrite" };
         ShellRunner.main(arg);
+
+        //新的mapper替换现有的xml文件
+        Map<String, org.dom4j.Document> docMap = DocumentCompareAndReplaceUtils.parseDocument();
+        DocumentCompareAndReplaceUtils.replaceDoc(docMap,
+                "D:\\worksoft\\IntelliJIDEA\\workspace\\lanmao-ec\\lanmao-ec\\lanmao-ec-parent\\lanmao-ec-service");
     }  
 }  
