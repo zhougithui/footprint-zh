@@ -21,7 +21,7 @@ import java.util.Objects;
  * 文档对比以及替换
  * @author hui.zhou 9:29 2018/2/12
  */
-public class DocumentCompareAndReplaceUtils {
+public class XmlCompareAndReplaceUtils {
     static String MAPPER_CLASSPATH = "mybatis/mapper";
     /**
      * 获取新的文档

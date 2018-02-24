@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * 覆盖增删改查生成Plugin
@@ -87,7 +86,7 @@ public class CurdPlugin extends PluginAdapter {
         ShellRunner.main(arg);
 
         //新的mapper替换现有的xml文件
-        DocumentCompareAndReplaceUtils.replaceDoc(
+        XmlCompareAndReplaceUtils.replaceDoc(
                 "D:\\worksoft\\IntelliJIDEA\\workspace\\lanmao-ec\\lanmao-ec\\lanmao-ec-parent\\lanmao-ec-service");
     }  
 }  
