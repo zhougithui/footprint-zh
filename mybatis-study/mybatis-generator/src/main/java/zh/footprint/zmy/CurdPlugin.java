@@ -87,8 +87,7 @@ public class CurdPlugin extends PluginAdapter {
         ShellRunner.main(arg);
 
         //新的mapper替换现有的xml文件
-        Map<String, org.dom4j.Document> docMap = DocumentCompareAndReplaceUtils.parseDocument();
-        DocumentCompareAndReplaceUtils.replaceDoc(docMap,
+        DocumentCompareAndReplaceUtils.replaceDoc(
                 "D:\\worksoft\\IntelliJIDEA\\workspace\\lanmao-ec\\lanmao-ec\\lanmao-ec-parent\\lanmao-ec-service");
     }  
 }  

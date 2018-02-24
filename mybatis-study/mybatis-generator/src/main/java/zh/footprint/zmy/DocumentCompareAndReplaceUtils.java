@@ -27,7 +27,7 @@ public class DocumentCompareAndReplaceUtils {
      * 获取新的文档
      * @return
      */
-    public static Map<String, Document> parseDocument(){
+    private static Map<String, Document> parseDocument(){
         Map<String, Document> docMap = new HashMap<>();
 
         String docPath = FpStringBuilder.buildDefault()
@@ -43,11 +43,11 @@ public class DocumentCompareAndReplaceUtils {
 
     /**
      * 新的内容替换旧的xml
-     * @param newDocMap
      * @param projectPathToReplace 需要替换的工程路径
      *                             例如：D:\worksoft\IntelliJIDEA\workspace\lanmao-ec\lanmao-ec\lanmao-ec-parent\lanmao-ec-service
      */
-    public static void replaceDoc(Map<String, Document> newDocMap, String projectPathToReplace){
+    public static void replaceDoc(String projectPathToReplace){
+        Map<String, Document> newDocMap = parseDocument();
         String path = FpStringBuilder.buildDefault()
                 .append(projectPathToReplace)
                 .append(File.separator)
@@ -192,7 +192,6 @@ public class DocumentCompareAndReplaceUtils {
     }
 
     public static void main(String[] args){
-        Map<String, Document> docMap = parseDocument();
-        replaceDoc(docMap, "D:\\worksoft\\IntelliJIDEA\\workspace\\lanmao-ec\\lanmao-ec\\lanmao-ec-parent\\lanmao-ec-service");
+        replaceDoc("D:\\worksoft\\IntelliJIDEA\\workspace\\lanmao-ec\\lanmao-ec\\lanmao-ec-parent\\lanmao-ec-service");
     }
 }
