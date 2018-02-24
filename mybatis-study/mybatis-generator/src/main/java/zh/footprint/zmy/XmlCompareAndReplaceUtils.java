@@ -124,7 +124,7 @@ public class XmlCompareAndReplaceUtils {
             }
             if(node instanceof Text){
                 if(!node.getText().trim().equalsIgnoreCase("")){
-                    String text = "  " + node.getText().trim();
+                    String text = node.getText().trim();
                     if(text.contains(">")){
                         text = text.replaceAll(">", "&gt;");
                     }else if(text.contains("<")){
@@ -175,6 +175,11 @@ public class XmlCompareAndReplaceUtils {
 
         Map<String, Element> idElementMapSrc = new HashMap<>();
         rootEleSrc.elements().forEach(element -> idElementMapSrc.put(element.attributeValue("id"), element));
+
+        //替换子元素属性
+        rootEleDesc.elements().forEach(element -> {
+            element.setAttributes(idElementMapSrc.get(element.attribute("id").getValue()).attributes());
+        });
 
         //相同element属性覆盖
         idElementMapDesc.forEach((id, ele) -> {
