@@ -31,7 +31,8 @@ public class XmlCompareAndReplaceUtils {
         Map<String, Document> docMap = new HashMap<>();
 
         String docPath = FpStringBuilder.buildDefault()
-                .append(PathUtils.rootClassPath())
+                .append(PathUtils.rootClassPath().replace("target/classes", CommonConstants.MAIN_RESOURCE_PATH))
+                .append(File.separator)
                 .append(MAPPER_CLASSPATH).toString();
         Path path = Paths.get(docPath);
         File[] files = path.toFile().listFiles();
