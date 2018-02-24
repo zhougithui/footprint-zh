@@ -85,8 +85,10 @@ public class CurdPlugin extends PluginAdapter {
         String[] arg = { "-configfile", config, "-overwrite" };
         ShellRunner.main(arg);
 
+        String projectPath = "D:\\worksoft\\IntelliJIDEA\\workspace\\lanmao-ec\\lanmao-ec\\lanmao-ec-parent\\lanmao-ec-service";
         //新的mapper替换现有的xml文件
-        XmlCompareAndReplaceUtils.replaceDoc(
-                "D:\\worksoft\\IntelliJIDEA\\workspace\\lanmao-ec\\lanmao-ec\\lanmao-ec-parent\\lanmao-ec-service");
+        XmlCompareAndReplaceUtils.replaceDoc(projectPath);
+        //替换java文件
+        JavaCompareAndReplaceUtils.replaceJavaFile(projectPath);
     }  
 }  
