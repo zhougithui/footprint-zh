@@ -25,10 +25,10 @@ public class CurdPlugin extends PluginAdapter {
         XmlElement parentElement = document.getRootElement();
           
         // 添加序列
-        XmlElement sql = new XmlElement("sql");  
+        /*XmlElement sql = new XmlElement("sql");
         sql.addAttribute(new Attribute("id", "TABLE_SEQUENCE"));
         sql.addElement(new TextElement(tableName + "_SEQ.nextval"));
-        parentElement.addElement(sql);
+        parentElement.addElement(sql);*/
 
         //自定义插入
         InsertElementGenerator.addElements(parentElement, introspectedTable, context);

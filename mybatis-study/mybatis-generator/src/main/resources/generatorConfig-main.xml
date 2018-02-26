@@ -43,12 +43,37 @@
       <columnOverride column="VERSION" javaType="java.lang.Long" jdbcType="NUMERIC"/>
     </table>
 -->
-    <table schema="LMLY_EC" tableName="T_BILL" domainObjectName="BillEntity"
+    <!--<table schema="LMLY_EC" tableName="T_PAYMENT_ORDER" domainObjectName="PaymentOrderEntity"
            enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
            enableUpdateByExample="false">
       <generatedKey column="ID" sqlStatement="JDBC" identity="true"/>
       <columnOverride column="ID" javaType="java.lang.Long" jdbcType="NUMERIC"/>
       <columnOverride column="VERSION" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+      <columnOverride column="PAY_TIME_CONSUMING" jdbcType="NUMERIC"/>
+      <columnOverride column="PAY_AMOUNT" jdbcType="NUMERIC"/>
+      <columnOverride column="REFUND_AMOUNT" jdbcType="NUMERIC"/>
+      <columnOverride column="ENTER_AMOUNT" jdbcType="NUMERIC"/>
+      <columnOverride column="FEE" jdbcType="NUMERIC"/>
+      <columnOverride column="INCOME_AMOUNT" jdbcType="NUMERIC"/>
+      <columnOverride column="PLATFORM_COMMISSION" jdbcType="NUMERIC"/>
+      <columnOverride column="MERCHANT_PRO_RATE" jdbcType="NUMERIC"/>
+      <columnOverride column="PAY_CHANNEL_RATE" jdbcType="NUMERIC"/>
+    </table>-->
+
+    <table schema="LMLY_EC" tableName="T_PAYMENT_REFUND" domainObjectName="PaymentRefundEntity"
+           enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+           enableUpdateByExample="false">
+      <generatedKey column="ID" sqlStatement="JDBC" identity="true"/>
+      <columnOverride column="ID" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+      <columnOverride column="VERSION" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+      <columnOverride column="PRI_AMOUNT" jdbcType="NUMERIC"/>
+      <columnOverride column="REFUND_AMOUNT" jdbcType="NUMERIC"/>
+      <columnOverride column="OUT_AMOUNT" jdbcType="NUMERIC"/>
+      <columnOverride column="RETREAT_INCOME_AMOUNT" jdbcType="NUMERIC"/>
+      <columnOverride column="RETREAT_FEE" jdbcType="NUMERIC"/>
+      <columnOverride column="RETREAT_PLATFORM_COMMISSION" jdbcType="NUMERIC"/>
+      <columnOverride column="RETREAT_CHANNEL_FEE" jdbcType="NUMERIC"/>
+      <columnOverride column="TIME_CONSUMING" jdbcType="NUMERIC"/>
     </table>
 
   </context>
