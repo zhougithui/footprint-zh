@@ -106,11 +106,11 @@
                     <!--
                         自定义的plugin
                     -->
-                    <dependency>
+                    <!--<dependency>
                         <groupId>zh.footprint.zmy</groupId>
                         <artifactId>mybatis-generator</artifactId>
                         <version>1.0.0-SNAPSHOT</version>
-                    </dependency>
+                    </dependency>-->
                 </dependencies>
             </plugin>
         </plugins>
