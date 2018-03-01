@@ -96,7 +96,7 @@
         <guava.version>21.0</guava.version>
         <ehcache.version>3.3.1</ehcache.version>
         <spring.retry.version>1.2.0.RELEASE</spring.retry.version>
-        <spring.batch.version>3.0.7.RELEASE</spring.batch.version>
+        <spring.batch.version>4.0.0.RELEASE</spring.batch.version>
         <codec.version>1.9</codec.version>
         <amqp.version>5.0.0</amqp.version>
         <jedis.version>2.9.0</jedis.version>

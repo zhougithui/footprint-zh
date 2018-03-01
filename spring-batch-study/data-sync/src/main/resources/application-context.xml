@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context.xsd">
+  <context:annotation-config />
+
+  <!-- Component scan to find all Spring components -->
+  <context:component-scan base-package="com.lanmao.data.sync" />
+
+  <!-- 事务管理器 -->
+  <bean id="transactionManager" class="org.springframework.batch.support.transaction.ResourcelessTransactionManager"/>
+
+  <!-- Create job-meta tables automatically -->
+  <!--<jdbc:initialize-database data-source="dataSource">
+    <jdbc:script location="org/springframework/batch/core/schema-drop-mysql.sql" />
+    <jdbc:script location="org/springframework/batch/core/schema-mysql.sql" />
+  </jdbc:initialize-database>-->
+
+  <!--
+    Spring Batch 管理 job 状态的组件。 在这里它使用前面配置的
+    jdbctemplate 将 job 信息存储到MySQL数据库中
+  -->
+  <bean id="jobRepository" class="org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean">
+    <property name="transactionManager" ref="transactionManager" />
+  </bean>
+
+  <!--
+    启动和管理 Spring Batch 作业工作流的组件
+  -->
+  <bean id="jobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+    <property name="jobRepository" ref="jobRepository" />
+  </bean>
+
+</beans>
