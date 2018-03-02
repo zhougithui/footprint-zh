@@ -10,7 +10,7 @@
     <artifactId>mybatis</artifactId>
     <packaging>pom</packaging>
 
-    <name>mybatis-study</name>
+    <name>mybatis</name>
     <url>http://maven.apache.org</url>
     <modules>
         <module>mybatis-spring</module>
