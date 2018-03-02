@@ -7,21 +7,21 @@
     <version>1.0.0-SNAPSHOT</version>
     <url>http://maven.apache.org</url>
     <modules>
-        <module>spring-framework-study</module>
-        <module>spring-boot-study</module>
-        <module>spring-redis-study</module>
-        <module>spring-rabbit-study</module>
-        <module>java-study</module>
-        <module>spring-mvc-study</module>
-        <module>springfox-study</module>
-        <module>spring-jmx-study</module>
-        <module>spring-retry-study</module>
-        <module>spring-batch-study</module>
-        <module>sharding-jdbc-study</module>
-        <module>dubbo-study</module>
+        <module>spring-framework</module>
+        <module>spring-boot</module>
+        <module>spring-redis</module>
+        <module>spring-rabbit</module>
+        <module>java</module>
+        <module>spring-mvc</module>
+        <module>springfox</module>
+        <module>spring-jmx</module>
+        <module>spring-retry</module>
+        <module>spring-batch</module>
+        <module>sharding-jdbc</module>
+        <module>dubbo</module>
         <module>footprint-zh-common</module>
-        <module>mybatis-study</module>
-        <module>elasticsearch-study</module>
+        <module>mybatis</module>
+        <module>elasticsearch</module>
     </modules>
 
     <properties>

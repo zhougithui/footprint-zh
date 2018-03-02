@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
-    <artifactId>spring-jmx-study</artifactId>
+    <artifactId>spring-framework</artifactId>
 
 
 </project>

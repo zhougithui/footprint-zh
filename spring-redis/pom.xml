@@ -8,8 +8,12 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
+    <artifactId>spring-redis</artifactId>
     <packaging>pom</packaging>
-    <artifactId>spring-framework-study</artifactId>
+
+    <modules>
+        <module>lmly-redis</module>
+    </modules>
 
 
 </project>

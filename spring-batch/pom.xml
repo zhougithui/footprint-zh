@@ -10,10 +10,9 @@
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
     <modules>
-        <module>elasticsearch-facade</module>
-        <module>elasticsearch-service</module>
+        <module>data-sync</module>
     </modules>
-    <artifactId>elasticsearch-study</artifactId>
+    <artifactId>spring-batch</artifactId>
 
 
 </project>

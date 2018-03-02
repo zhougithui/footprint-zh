@@ -7,7 +7,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>mybatis-study</artifactId>
+    <artifactId>mybatis</artifactId>
     <packaging>pom</packaging>
 
     <name>mybatis-study</name>
