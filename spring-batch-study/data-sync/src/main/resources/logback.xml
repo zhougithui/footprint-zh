@@ -5,7 +5,7 @@
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
 	<!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径-->
 	<!-- <property name="LOG_HOME" value="/home/admin/unite/channal-web" /> -->
-	<property name="LOG_LEVEL" value="DEBUG" />
+	<property name="LOG_LEVEL" value="INFO" />
 
 	<!--控制台日志 START -->
 	<appender name="consoleLog" class="ch.qos.logback.core.ConsoleAppender">
