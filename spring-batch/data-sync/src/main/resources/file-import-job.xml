@@ -9,9 +9,6 @@
         http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/batch
         http://www.springframework.org/schema/batch/spring-batch.xsd">
-    <!-- Import our beans -->
-    <import resource="classpath:application-context.xml" />
-
     <!--
         job中负责数据读取操作
     -->

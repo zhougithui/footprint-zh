@@ -13,7 +13,7 @@
     <!--
         初始化jedis缓存组件
     -->
-    <bean id="jeidsConnectionFactory" class="com.zmy.redis.factory.JedisConnectionFactoryBean">
+    <bean id="jeidsConnectionFactory" class="com.footprint.redis.factory.JedisConnectionFactoryBean">
         <property name="sentinels" value="${redis.sentinels}"/>
         <property name="masterName" value="${redis.masterName}"/>
         <property name="password" value="${redis.password}"/>

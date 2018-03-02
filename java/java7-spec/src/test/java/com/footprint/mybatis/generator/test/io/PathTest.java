@@ -1,6 +1,6 @@
 package com.footprint.mybatis.generator.test.io;
 
-import com.zmy.utils.PathUtils;
+import com.footprint.utils.PathUtils;
 import org.junit.Test;
 
 import java.nio.file.Paths;

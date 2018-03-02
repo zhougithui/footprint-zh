@@ -1,8 +1,8 @@
 package com.footprint.mybatis.generator.filereplace;
 
-import com.zmy.constants.CommonConstants;
-import com.zmy.utils.FpStringBuilder;
-import com.zmy.utils.PathUtils;
+import com.footprint.constants.CommonConstants;
+import com.footprint.utils.FpStringBuilder;
+import com.footprint.utils.PathUtils;
 import org.dom4j.*;
 import org.dom4j.io.SAXReader;
 import org.mybatis.generator.api.dom.xml.Attribute;

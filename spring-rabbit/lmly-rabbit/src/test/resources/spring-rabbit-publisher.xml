@@ -75,7 +75,7 @@
           class="org.springframework.amqp.rabbit.connection.CachingConnectionFactory">
     </bean>-->
 
-	<bean id="connNameStrategy" class="com.zmy.rabbit.ConnectionNameStrategy">
+	<bean id="connNameStrategy" class="com.footprint.rabbit.ConnectionNameStrategy">
 		<property name="connectionFactory" ref="connectionFactory"/>
 		<property name="connName" value="RABBIT-CONN-ZH"/>
 	</bean>

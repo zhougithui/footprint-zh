@@ -30,7 +30,7 @@
             connection-timeout="30000"
     />
 
-    <bean id="connNameStrategy" class="com.zmy.rabbit.ConnectionNameStrategy">
+    <bean id="connNameStrategy" class="com.footprint.rabbit.ConnectionNameStrategy">
         <property name="connectionFactory" ref="connectionFactory"/>
         <property name="connName" value="RABBIT-CONSUMER"/>
     </bean>
@@ -63,7 +63,7 @@
 		concurency 通道数量
 		prefetch 消费并发数
 	-->
-	<bean id="messageListener" class="com.zmy.rabbit.consumer.DefaultMessageListener"/>
+	<bean id="messageListener" class="com.footprint.rabbit.consumer.DefaultMessageListener"/>
     <!--
         type：
             为direct的时候会实例化 DirectMessageListenerContainer
@@ -108,10 +108,10 @@
             <bean class="org.springframework.amqp.rabbit.listener.ConditionalRejectingErrorHandler"/>
         </property>
         <property name="consumerTagStrategy">
-            <bean class="com.zmy.rabbit.consumer.DefaultConsumerTagStrategy"/>
+            <bean class="com.footprint.rabbit.consumer.DefaultConsumerTagStrategy"/>
         </property>
     </bean>
 
 
-    <bean id="consumerFailedListener" class="com.zmy.rabbit.consumer.listener.ConsumerFailedListener"/>
+    <bean id="consumerFailedListener" class="com.footprint.rabbit.consumer.listener.ConsumerFailedListener"/>
 </beans>

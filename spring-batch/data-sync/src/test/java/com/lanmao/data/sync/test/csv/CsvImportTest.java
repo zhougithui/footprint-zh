@@ -17,10 +17,9 @@ public class CsvImportTest {
         ClassPathXmlApplicationContext ac = new ClassPathXmlApplicationContext("file-import-job.xml");
         ac.registerShutdownHook();
         SimpleJobLauncher launcher = ac.getBean(SimpleJobLauncher.class);
-        launcher.setTaskExecutor(new SimpleAsyncTaskExecutor());
 
         Map<String,JobParameter> parameters = new HashMap<>();
-        parameters.put("run.month",new JobParameter("2011-10"));
+        parameters.put("run.month",new JobParameter("2018-05"));
         JobExecution je = null;
         try {
             je = launcher.run((Job) ac.getBean("simpleFileImportJob"), new JobParameters(parameters));

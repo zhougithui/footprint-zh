@@ -61,7 +61,7 @@
             publisher-returns="true"
     />-->
 
-    <bean id="defaultClientProperties" class="com.zmy.rabbit.product.DefaultClientProperties"/>
+    <bean id="defaultClientProperties" class="com.footprint.rabbit.product.DefaultClientProperties"/>
     <bean id="clientConnectionFactory"
           class="org.springframework.amqp.rabbit.connection.RabbitConnectionFactoryBean">
         <property name="virtualHost" value="/"/>
@@ -118,23 +118,23 @@
         <property name="closeTimeout" value="1000"/>
         <property name="channelListeners">
             <list>
-                <bean class="com.zmy.rabbit.listener.ChannelListenerOne"/>
+                <bean class="com.footprint.rabbit.listener.ChannelListenerOne"/>
             </list>
         </property>
         <property name="connectionListeners">
             <list>
-                <bean class="com.zmy.rabbit.listener.ConnectionListenerOne"/>
+                <bean class="com.footprint.rabbit.listener.ConnectionListenerOne"/>
             </list>
         </property>
         <property name="closeExceptionLogger">
-            <bean class="com.zmy.rabbit.log.CloseExceptionLoggerOne"/>
+            <bean class="com.footprint.rabbit.log.CloseExceptionLoggerOne"/>
         </property>
         <property name="recoveryListener">
-            <bean class="com.zmy.rabbit.listener.RecoverListenerOne"/>
+            <bean class="com.footprint.rabbit.listener.RecoverListenerOne"/>
         </property>
     </bean>
 
-    <bean id="connNameStrategy" class="com.zmy.rabbit.ConnectionNameStrategy">
+    <bean id="connNameStrategy" class="com.footprint.rabbit.ConnectionNameStrategy">
         <property name="connectionFactory" ref="connectionFactory"/>
         <property name="connName" value="RABBIT2-CONN-ZH"/>
     </bean>
@@ -161,8 +161,8 @@
     <bean id="jackson2JsonMessageConverter"
           class="org.springframework.amqp.support.converter.Jackson2JsonMessageConverter"/>
 
-    <bean id="confirmCallBack" class="com.zmy.rabbit.product.DefaultConfirmCallBack" />
-    <bean id="returnCallBack" class="com.zmy.rabbit.product.DefaultReturnCallBack" />
+    <bean id="confirmCallBack" class="com.footprint.rabbit.product.DefaultConfirmCallBack" />
+    <bean id="returnCallBack" class="com.footprint.rabbit.product.DefaultReturnCallBack" />
     <!--
         mandatory
         mandatory-expression
