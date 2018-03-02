@@ -12,7 +12,7 @@
     <modules>
         <module>bill-consumer</module>
     </modules>
-    <artifactId>dubbo-comsumer</artifactId>
+    <artifactId>dubbo-consumer</artifactId>
 
 
 </project>
