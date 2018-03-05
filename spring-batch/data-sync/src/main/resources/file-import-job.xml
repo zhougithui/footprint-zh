@@ -16,7 +16,9 @@
         <!--
           输入文件
         -->
-        <property name="resource" value="product.csv" />
+        <property name="resource" value="classpath:product.csv" />
+        <!--
+        <property name="strict" value="false"/>-->
         <!--
           跳过行
         -->
@@ -60,7 +62,9 @@
         <property name="inputFile" value="product.csv" />
     </bean>
 
-    <job id="simpleFileImportJob" xmlns="http://www.springframework.org/schema/batch">
+    <bean id="simpleIncrementer" class="com.lanmao.data.sync.csv.SimpleIncrementer"/>
+
+    <job id="simpleFileImportJob" restartable="true" incrementer="simpleIncrementer" xmlns="http://www.springframework.org/schema/batch">
         <step id="importFileStep" next="archiveFileStep">
             <tasklet>
                 <!--

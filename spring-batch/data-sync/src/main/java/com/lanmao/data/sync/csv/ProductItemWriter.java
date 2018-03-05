@@ -4,6 +4,7 @@ import com.lanmao.data.sync.csv.vo.Product;
 import org.springframework.batch.item.ItemWriter;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class ProductItemWriter implements ItemWriter<Product> {
 
@@ -13,6 +14,7 @@ public class ProductItemWriter implements ItemWriter<Product> {
         for (Product product : products) {
             System.out.println(product.getName());
         }
-        throw new RuntimeException("模拟异常重试");
+        TimeUnit.SECONDS.sleep(10);
+        //throw new RuntimeException("模拟异常重试");
     }
 }

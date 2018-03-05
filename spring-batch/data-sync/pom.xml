@@ -188,6 +188,12 @@
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.footprint</groupId>
+            <artifactId>footprint-zh-common</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
     <build>
         <finalName>data-sync</finalName>
