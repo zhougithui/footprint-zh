@@ -38,7 +38,7 @@ public class EntityCompareAndReplaceUtils {
         Path path = Paths.get(docPath);
         File[] files = path.toFile().listFiles();
         for (File docFile : files){
-            if(docFile.isFile() && !docFile.getName().contains("Example")){
+            if(docFile.isFile() && !docFile.getName().contains("Example") && !docFile.getName().contains("Mapper")){
                 docMap.put(docFile.getName(), docFile);
             }
         }

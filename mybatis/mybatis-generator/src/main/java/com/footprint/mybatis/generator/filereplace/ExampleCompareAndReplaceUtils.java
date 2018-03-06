@@ -85,6 +85,7 @@ public class ExampleCompareAndReplaceUtils {
                             Files.delete(Paths.get(javaFilePath));
 
                             File file = new File(javaFilePath);
+                            logger.info("替换example文件，{}", packageName);
                             FileWriter fileWriter = new FileWriter(file);
                             BufferedWriter writer = new BufferedWriter(fileWriter);
 
