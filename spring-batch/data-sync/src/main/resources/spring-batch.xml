@@ -25,6 +25,9 @@
         </property>
     </bean>
 
+    <!--
+        job管理
+    -->
     <bean id="jobRegistry" class="org.springframework.batch.core.configuration.support.MapJobRegistry"/>
     <bean id="jobOperator" class="org.springframework.batch.core.launch.support.SimpleJobOperator">
         <property name="jobExplorer" ref="jobExplorer"/>
@@ -33,4 +36,10 @@
         <property name="jobRepository" ref="jobRepository"/>
     </bean>
 
+    <!--
+        将job自动注册到jobRegistry中
+    -->
+    <bean id="jobRegistryBeanPostProcessor" class="org.springframework.batch.core.configuration.support.JobRegistryBeanPostProcessor">
+        <property name="jobRegistry" ref="jobRegistry"/>
+    </bean>
 </beans>

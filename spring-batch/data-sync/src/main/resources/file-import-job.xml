@@ -62,10 +62,18 @@
         <property name="inputFile" value="product.csv" />
     </bean>
 
+    <bean id="simpleJobExecutionListener" class="com.lanmao.data.sync.listener.SimpleJobExecutionListener"/>
+    <bean id="simpleStepExecutionListener" class="com.lanmao.data.sync.listener.SimpleStepExecutionListener"/>
+    <bean id="simpleChunkListener" class="com.lanmao.data.sync.listener.SimpleChunkListener"/>
+    <bean id="simpleItemReadListener" class="com.lanmao.data.sync.listener.SimpleItemReadListener"/>
+    <bean id="simpleItemProcessListener" class="com.lanmao.data.sync.listener.SimpleItemProcessListener"/>
+    <bean id="simpleItemWriteListener" class="com.lanmao.data.sync.listener.SimpleItemWriteListener"/>
+    <bean id="simpleSkipListener" class="com.lanmao.data.sync.listener.SimpleSkipListener"/>
+
     <bean id="simpleIncrementer" class="com.lanmao.data.sync.csv.SimpleIncrementer"/>
 
     <job id="simpleFileImportJob" restartable="true" incrementer="simpleIncrementer" xmlns="http://www.springframework.org/schema/batch">
-        <step id="importFileStep" next="archiveFileStep">
+        <step allow-start-if-complete="true" id="importFileStep" next="archiveFileStep">
             <tasklet>
                 <!--
                     每个5秒钟执行一次writer
@@ -77,6 +85,13 @@
                        skip-limit="10"
                        retry-limit="3"
                 >
+                    <batch:listeners>
+                        <batch:listener ref="simpleChunkListener"/>
+                        <batch:listener ref="simpleItemReadListener"/>
+                        <batch:listener ref="simpleItemProcessListener"/>
+                        <batch:listener ref="simpleItemWriteListener"/>
+                        <batch:listener ref="simpleSkipListener"/>
+                    </batch:listeners>
                     <!--
                         在这种情况下, 在处理某条记录时如果抛出 FlatFileParseException 异常,
                         则这条记录将被跳过。 如果超过10次 skip, 那么job 失败
@@ -91,11 +106,17 @@
                         <include class="java.lang.RuntimeException"/>
                     </retryable-exception-classes>
                 </chunk>
+                <batch:listeners>
+                    <batch:listener ref="simpleStepExecutionListener"/>
+                </batch:listeners>
             </tasklet>
         </step>
 
-        <step id="archiveFileStep">
+        <step allow-start-if-complete="true" id="archiveFileStep">
             <tasklet ref="archiveFileTasklet" />
         </step>
+        <batch:listeners>
+            <batch:listener ref="simpleJobExecutionListener"/>
+        </batch:listeners>
     </job>
 </beans>
