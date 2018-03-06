@@ -5,6 +5,8 @@ import com.footprint.utils.FpStringBuilder;
 import com.footprint.utils.PathUtils;
 import org.dom4j.*;
 import org.dom4j.io.SAXReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -19,6 +21,7 @@ import java.util.Objects;
  * @author hui.zhou 9:29 2018/2/12
  */
 public class EntityCompareAndReplaceUtils {
+    private static final Logger logger = LoggerFactory.getLogger(EntityCompareAndReplaceUtils.class);
     static String MAPPER_CLASSPATH = "mybatis/mapper";
 
     /**
@@ -49,6 +52,7 @@ public class EntityCompareAndReplaceUtils {
      */
     public static void replaceEntityFile(String projectPathToReplace){
         Map<String, File> newJavaFileMap = parseJavaFile();
+        logger.info("新的entity文件数量为，{}", newJavaFileMap.size());
 
         String path = FpStringBuilder.buildDefault()
                 .append(projectPathToReplace)
@@ -78,7 +82,7 @@ public class EntityCompareAndReplaceUtils {
                         String javaFilePath =  sb.toString();
                         try {
                             Files.delete(Paths.get(javaFilePath));
-
+                            logger.info("替换entity文件，{}", packageName);
                             File file = new File(javaFilePath);
                             FileWriter fileWriter = new FileWriter(file);
                             BufferedWriter writer = new BufferedWriter(fileWriter);

@@ -5,9 +5,12 @@ import com.footprint.utils.FpStringBuilder;
 import com.footprint.utils.PathUtils;
 import org.dom4j.*;
 import org.dom4j.io.SAXReader;
+import org.dom4j.tree.DefaultCDATA;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.nio.file.Path;
@@ -22,12 +25,15 @@ import java.util.Objects;
  * @author hui.zhou 9:29 2018/2/12
  */
 public class XmlCompareAndReplaceUtils {
+    private static final Logger logger = LoggerFactory.getLogger(XmlCompareAndReplaceUtils.class);
+
     static String MAPPER_CLASSPATH = "mybatis/mapper";
     /**
      * 获取新的文档
      * @return
      */
     private static Map<String, Document> parseDocument(){
+        logger.info("获取新的mapper文件map-start");
         Map<String, Document> docMap = new HashMap<>();
 
         String docPath = FpStringBuilder.buildDefault()
@@ -39,6 +45,7 @@ public class XmlCompareAndReplaceUtils {
         for (File docFile : files){
             docMap.put(docFile.getName(), getDocument(docFile));
         }
+        logger.info("获取新的mapper文件map-end");
         return docMap;
     }
 
@@ -49,6 +56,7 @@ public class XmlCompareAndReplaceUtils {
      */
     public static void replaceDoc(String projectPathToReplace){
         Map<String, Document> newDocMap = parseDocument();
+        logger.info("新的mapper文件数量为，{}", newDocMap.size());
         String path = FpStringBuilder.buildDefault()
                 .append(projectPathToReplace)
                 .append(File.separator)
@@ -62,7 +70,13 @@ public class XmlCompareAndReplaceUtils {
             if(Objects.nonNull(doc)){
                 try (FileWriter fileWriter = new FileWriter(new File(docFile.getAbsolutePath() + ".temp"))) {
                     //对比两个document，把新增的方法移至新的xml中
-                    compareAndReplace(getDocument(docFile), doc);
+                    try {
+                        logger.info("生成新的mapper文件并替换,{}", docFile.getName());
+                        compareAndReplace(getDocument(docFile), doc);
+                    } catch (Exception e) {
+                        logger.error("创建新的mapper，需要手动替换");
+                        continue;
+                    }
 
                     //转化成mybatis的Document对象
                     org.mybatis.generator.api.dom.xml.Document mybatisDoc = convertToMybatisDoc(doc);
@@ -132,6 +146,9 @@ public class XmlCompareAndReplaceUtils {
                     }
                     mybatisEle.addElement(new TextElement(text));
                 }
+            }else if(node instanceof DefaultCDATA){
+                DefaultCDATA cdata = (DefaultCDATA) node;
+                mybatisEle.addElement(new TextElement("<![CDATA[" + cdata.getText() + "]]>"));
             }else{
                 Element ele = (Element) node;
                 XmlElement subMybatisEle = new XmlElement(node.getName());
