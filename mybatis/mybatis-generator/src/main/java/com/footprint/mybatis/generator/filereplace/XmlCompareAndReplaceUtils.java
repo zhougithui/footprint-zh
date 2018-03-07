@@ -74,7 +74,8 @@ public class XmlCompareAndReplaceUtils {
                         logger.info("生成新的mapper文件并替换,{}", docFile.getName());
                         compareAndReplace(getDocument(docFile), doc);
                     } catch (Exception e) {
-                        logger.error("创建新的mapper，需要手动替换");
+                        e.printStackTrace();
+                        logger.error("mapper替换异常");
                         continue;
                     }
 

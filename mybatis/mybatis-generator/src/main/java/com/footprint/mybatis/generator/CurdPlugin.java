@@ -10,6 +10,8 @@ import com.footprint.utils.PathUtils;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.PluginAdapter;
 import org.mybatis.generator.api.ShellRunner;
+import org.mybatis.generator.api.dom.java.Interface;
+import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.xml.Document;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.slf4j.Logger;
@@ -82,30 +84,65 @@ public class CurdPlugin extends PluginAdapter {
         return !VERSION_FLAG;
     }
 
-    /*@Override
-    public boolean sqlMapCountByExampleElementGenerated(XmlElement element, IntrospectedTable introspectedTable) {
+    @Override
+    public boolean sqlMapResultMapWithBLOBsElementGenerated(XmlElement element,
+                                                            IntrospectedTable introspectedTable) {
         return false;
     }
 
     @Override
-    public boolean sqlMapDeleteByExampleElementGenerated(XmlElement element, IntrospectedTable introspectedTable) {
+    public boolean sqlMapSelectByExampleWithoutBLOBsElementGenerated(
+            XmlElement element, IntrospectedTable introspectedTable) {
         return false;
     }
 
     @Override
-    public boolean sqlMapSelectByExampleWithBLOBsElementGenerated(XmlElement element, IntrospectedTable introspectedTable) {
+    public boolean sqlMapSelectByExampleWithBLOBsElementGenerated(
+            XmlElement element, IntrospectedTable introspectedTable) {
         return false;
     }
 
     @Override
-    public boolean sqlMapUpdateByExampleSelectiveElementGenerated(XmlElement element, IntrospectedTable introspectedTable) {
+    public boolean sqlMapUpdateByExampleWithBLOBsElementGenerated(
+            XmlElement element, IntrospectedTable introspectedTable) {
         return false;
     }
 
     @Override
-    public boolean sqlMapUpdateByExampleWithBLOBsElementGenerated(XmlElement element, IntrospectedTable introspectedTable) {
+    public boolean sqlMapUpdateByExampleWithoutBLOBsElementGenerated(
+            XmlElement element, IntrospectedTable introspectedTable) {
         return false;
-    }*/
+    }
+
+    @Override
+    public boolean sqlMapUpdateByPrimaryKeyWithBLOBsElementGenerated(
+            XmlElement element, IntrospectedTable introspectedTable) {
+        return false;
+    }
+
+    @Override
+    public boolean sqlMapBlobColumnListElementGenerated(XmlElement element,
+                                                        IntrospectedTable introspectedTable) {
+        return false;
+    }
+
+    @Override
+    public boolean clientSelectByExampleWithBLOBsMethodGenerated(Method method,
+                                                                 Interface interfaze, IntrospectedTable introspectedTable) {
+        return false;
+    }
+
+    @Override
+    public boolean clientUpdateByExampleWithBLOBsMethodGenerated(Method method,
+                                                                 Interface interfaze, IntrospectedTable introspectedTable) {
+        return false;
+    }
+
+    @Override
+    public boolean clientUpdateByPrimaryKeyWithBLOBsMethodGenerated(Method method,
+                                                                    Interface interfaze, IntrospectedTable introspectedTable) {
+        return false;
+    }
 
     public boolean validate(List<String> arg0) {
         return true;  
