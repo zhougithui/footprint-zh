@@ -6,10 +6,10 @@
 <generatorConfiguration>
 
     <context id="LM_PAY" targetRuntime="MyBatis3">
-        <!--<commentGenerator>
-            <property name="suppressDate" value="false"/>
-            <property name="suppressAllComments" value="false"/>
-        </commentGenerator>-->
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
         <jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver"
                         connectionURL="jdbc:oracle:thin:@172.19.60.158:1521:orcl" userId="LM_PAY" password="123456">
         </jdbcConnection>
@@ -26,19 +26,24 @@
                              targetProject="D:\worksoft\IntelliJIDEA\workspace\footprint-zh\spring-batch\data-sync\src\main\java">
         </javaClientGenerator>
 
-        <table schema="LM_PAY" tableName="T_AUTH_ORDER" domainObjectName="AuthOrderEntity">
-            <generatedKey column="ID" sqlStatement="select SEQ_T_AUTH_ORDER.nextVal from dual"/>
-            <columnOverride column="ID" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-            <columnOverride column="CONSUME_TIME" jdbcType="NUMERIC"/>
+        <table schema="LM_PAY" tableName="T_AUTH_ORDER"
+               domainObjectName="AuthOrderEntity"
+               enableCountByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               enableUpdateByExample="false">
+            <generatedKey column="ID" sqlStatement="select 1 from dual" identity="false"/>
+            <columnOverride column="ID" javaType="java.lang.Long"/>
+            <columnOverride column="CONSUME_TIME" javaType="java.lang.Long" jdbcType="NUMERIC"/>
         </table>
 
     </context>
 
-    <context id="LM_PAY_DB2" targetRuntime="MyBatis3">
-        <!--<commentGenerator>
+    <!--<context id="LM_PAY_DB2" targetRuntime="MyBatis3">
+        <commentGenerator>
             <property name="suppressDate" value="true"/>
             <property name="suppressAllComments" value="true"/>
-        </commentGenerator>-->
+        </commentGenerator>
         <jdbcConnection driverClass="com.ibm.db2.jcc.DB2Driver"
                         connectionURL="jdbc:db2://172.19.60.48:50000/qa" userId="qa" password="123456">
         </jdbcConnection>
@@ -55,8 +60,16 @@
                              targetProject="D:\worksoft\IntelliJIDEA\workspace\footprint-zh\spring-batch\data-sync\src\main\java">
         </javaClientGenerator>
 
-        <table schema="LM_PAY" tableName="T_AUTH_ORDER" domainObjectName="AuthOrderEntity">
+        <table schema="LM_PAY" tableName="T_AUTH_ORDER"
+               domainObjectName="AuthOrderEntity"
+               enableCountByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               enableUpdateByExample="false">
+            <generatedKey column="ID" sqlStatement="select 1 from dual" identity="false"/>
+            <columnOverride column="ID" javaType="java.lang.Long"/>
+            <columnOverride column="CONSUME_TIME" javaType="java.lang.Long" jdbcType="NUMERIC"/>
         </table>
 
-    </context>
+    </context>-->
 </generatorConfiguration>

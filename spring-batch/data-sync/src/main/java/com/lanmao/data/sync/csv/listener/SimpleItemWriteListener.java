@@ -1,4 +1,4 @@
-package com.lanmao.data.sync.listener;
+package com.lanmao.data.sync.csv.listener;
 
 import com.lanmao.data.sync.csv.vo.Product;
 import org.springframework.batch.core.ItemWriteListener;

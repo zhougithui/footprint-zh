@@ -42,4 +42,7 @@
     <bean id="jobRegistryBeanPostProcessor" class="org.springframework.batch.core.configuration.support.JobRegistryBeanPostProcessor">
         <property name="jobRegistry" ref="jobRegistry"/>
     </bean>
+
+    <import resource="file-import-job.xml"/>
+    <import resource="auth-order-job.xml"/>
 </beans>

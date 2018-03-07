@@ -65,10 +65,10 @@
     <bean id="simpleJobExecutionListener" class="com.lanmao.data.sync.listener.SimpleJobExecutionListener"/>
     <bean id="simpleStepExecutionListener" class="com.lanmao.data.sync.listener.SimpleStepExecutionListener"/>
     <bean id="simpleChunkListener" class="com.lanmao.data.sync.listener.SimpleChunkListener"/>
-    <bean id="simpleItemReadListener" class="com.lanmao.data.sync.listener.SimpleItemReadListener"/>
-    <bean id="simpleItemProcessListener" class="com.lanmao.data.sync.listener.SimpleItemProcessListener"/>
-    <bean id="simpleItemWriteListener" class="com.lanmao.data.sync.listener.SimpleItemWriteListener"/>
-    <bean id="simpleSkipListener" class="com.lanmao.data.sync.listener.SimpleSkipListener"/>
+    <bean id="simpleItemReadListener" class="com.lanmao.data.sync.csv.listener.SimpleItemReadListener"/>
+    <bean id="simpleItemProcessListener" class="com.lanmao.data.sync.csv.listener.SimpleItemProcessListener"/>
+    <bean id="simpleItemWriteListener" class="com.lanmao.data.sync.csv.listener.SimpleItemWriteListener"/>
+    <bean id="simpleSkipListener" class="com.lanmao.data.sync.csv.listener.SimpleSkipListener"/>
 
     <bean id="simpleIncrementer" class="com.lanmao.data.sync.csv.SimpleIncrementer"/>
 
@@ -76,14 +76,18 @@
         <step allow-start-if-complete="true" id="importFileStep" next="archiveFileStep">
             <tasklet>
                 <!--
+                    事务配置
+                -->
+                <transaction-attributes timeout="10" isolation="READ_COMMITTED" propagation="REQUIRED"></transaction-attributes>
+                <!--
                     每个5秒钟执行一次writer
+                    //skip-limit="10"
+                   //retry-limit="3"
                 -->
                 <chunk reader="productReader"
                        processor="productCompositeProcessor"
                        writer="productWriter"
                        commit-interval="5"
-                       skip-limit="10"
-                       retry-limit="3"
                 >
                     <batch:listeners>
                         <batch:listener ref="simpleChunkListener"/>
@@ -96,15 +100,15 @@
                         在这种情况下, 在处理某条记录时如果抛出 FlatFileParseException 异常,
                         则这条记录将被跳过。 如果超过10次 skip, 那么job 失败
                     -->
-                    <skippable-exception-classes>
+                    <!--<skippable-exception-classes>
                         <include class="org.springframework.batch.item.file.FlatFileParseException"/>
-                    </skippable-exception-classes>
+                    </skippable-exception-classes>-->
                     <!--
                         什么样的异常会重试
                     -->
-                    <retryable-exception-classes>
+                    <!--<retryable-exception-classes>
                         <include class="java.lang.RuntimeException"/>
-                    </retryable-exception-classes>
+                    </retryable-exception-classes>-->
                 </chunk>
                 <batch:listeners>
                     <batch:listener ref="simpleStepExecutionListener"/>
