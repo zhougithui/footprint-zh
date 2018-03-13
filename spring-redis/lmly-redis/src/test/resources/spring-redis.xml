@@ -9,7 +9,7 @@
             http://www.springframework.org/schema/context/spring-context.xsd">
     <context:property-placeholder location="classpath:app.properties"/>
     <context:annotation-config />
-    <context:component-scan base-package="com.zmy.redis"/>
+    <context:component-scan base-package="com.footprint.redis"/>
     <!--
         初始化jedis缓存组件
     -->

@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
  * @author hui.zhou 17:28 2018/1/3
  */
 @SuppressWarnings("ALL")
-@Component
+//@Component
 public class Jdk7RedisUtils {
     private static final Logger logger = LoggerFactory.getLogger(Jdk7RedisUtils.class);
 

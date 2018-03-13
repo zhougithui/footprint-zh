@@ -236,14 +236,19 @@ public class JedisConnectionFactoryBean implements FactoryBean<JedisConnectionFa
         //初始化jedis连接工厂
         JedisConnectionFactory jedisConnectionFactory
                 = new JedisConnectionFactory(redisSentinelConfiguration, jedisClientConfiguration);
+        jedisConnectionFactory.afterPropertiesSet();
 
         redisTemplate.setConnectionFactory(jedisConnectionFactory);
         redisTemplate.setDefaultSerializer(new GsonSerializer());
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setHashKeySerializer(new StringRedisSerializer());
+        redisTemplate.afterPropertiesSet();
 
         RedisUtils.setRedisTemplate(redisTemplate);
         RedisUtils.setExpireTime(getDefaultExpiredSeconds());
+
+
+        logger.info("redis connection factory init end");
         return jedisConnectionFactory;
     }
 
