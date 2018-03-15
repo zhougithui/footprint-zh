@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lanmao.data.sync.dao.oracle.PaymentConfigEntityMapper">
+  <resultMap id="BaseResultMap" type="com.lanmao.data.sync.dao.entity.PaymentConfigEntity">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="VALUE" jdbcType="VARCHAR" property="value" />
+    <result column="VALUE_TYPE" jdbcType="VARCHAR" property="valueType" />
+    <result column="DOMAIN" jdbcType="VARCHAR" property="domain" />
+    <result column="KEY" jdbcType="VARCHAR" property="key" />
+    <result column="SYSTEM_NAME" jdbcType="VARCHAR" property="systemName" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="DATA" jdbcType="VARCHAR" property="data" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, VALUE, VALUE_TYPE, DOMAIN, KEY, SYSTEM_NAME, CREATE_TIME, MODIFY_TIME, REMARK, 
+    DATA
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from LM_PAY.T_PAYMENT_CONFIG
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from LM_PAY.T_PAYMENT_CONFIG
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.lanmao.data.sync.dao.entity.PaymentConfigEntity" useGeneratedKeys="false">
+    insert into LM_PAY.T_PAYMENT_CONFIG (ID, VALUE, VALUE_TYPE,
+      DOMAIN, KEY, SYSTEM_NAME, 
+      CREATE_TIME, MODIFY_TIME, REMARK, 
+      DATA)
+    values (#{id,jdbcType=DECIMAL}, #{value,jdbcType=VARCHAR}, #{valueType,jdbcType=VARCHAR}, 
+      #{domain,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}, #{systemName,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, 
+      #{data,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lanmao.data.sync.dao.entity.PaymentConfigEntity" useGeneratedKeys="false">
+    insert into LM_PAY.T_PAYMENT_CONFIG
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      ID,
+      <if test="value != null">
+        VALUE,
+      </if>
+      <if test="valueType != null">
+        VALUE_TYPE,
+      </if>
+      <if test="domain != null">
+        DOMAIN,
+      </if>
+      <if test="key != null">
+        KEY,
+      </if>
+      <if test="systemName != null">
+        SYSTEM_NAME,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+      <if test="data != null">
+        DATA,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      #{id,jdbcType=DECIMAL},
+      <if test="value != null">
+        #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="valueType != null">
+        #{valueType,jdbcType=VARCHAR},
+      </if>
+      <if test="domain != null">
+        #{domain,jdbcType=VARCHAR},
+      </if>
+      <if test="key != null">
+        #{key,jdbcType=VARCHAR},
+      </if>
+      <if test="systemName != null">
+        #{systemName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="data != null">
+        #{data,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lanmao.data.sync.dao.entity.PaymentConfigEntity">
+    update LM_PAY.T_PAYMENT_CONFIG
+    <set>
+      <if test="value != null">
+        VALUE = #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="valueType != null">
+        VALUE_TYPE = #{valueType,jdbcType=VARCHAR},
+      </if>
+      <if test="domain != null">
+        DOMAIN = #{domain,jdbcType=VARCHAR},
+      </if>
+      <if test="key != null">
+        KEY = #{key,jdbcType=VARCHAR},
+      </if>
+      <if test="systemName != null">
+        SYSTEM_NAME = #{systemName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="data != null">
+        DATA = #{data,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lanmao.data.sync.dao.entity.PaymentConfigEntity">
+    update LM_PAY.T_PAYMENT_CONFIG
+    set VALUE = #{value,jdbcType=VARCHAR},
+      VALUE_TYPE = #{valueType,jdbcType=VARCHAR},
+      DOMAIN = #{domain,jdbcType=VARCHAR},
+      KEY = #{key,jdbcType=VARCHAR},
+      SYSTEM_NAME = #{systemName,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      DATA = #{data,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+</mapper>

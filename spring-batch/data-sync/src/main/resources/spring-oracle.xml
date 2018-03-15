@@ -48,7 +48,7 @@
             <value>${c3p0.numHelperThreads}</value>
         </property>
     </bean>
-    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager" primary="true">
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
@@ -67,9 +67,12 @@
     </bean>
 
     <!-- 配置扫描器 -->
+    <bean id="beanNameGenerator" class="com.lanmao.data.MapperBeanNameGenerator">
+        <property name="suffix" value="ORCL"/>
+    </bean>
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <!-- 扫描me.gacl.dao这个包以及它的子包下的所有映射接口类 -->
-        <property name="basePackage" value="com.lanmao.data.sync.db.oracle.dao" />
+        <property name="nameGenerator" ref="beanNameGenerator"/>
+        <property name="basePackage" value="com.lanmao.data.sync.dao.oracle" />
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
     </bean>
 

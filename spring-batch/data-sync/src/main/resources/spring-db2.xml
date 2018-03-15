@@ -2,7 +2,8 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-            http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+            http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
+
     <bean id="dataSourceDB2" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
         <property name="driverClass" value="${datasource.db2.driverClassName}"/>
         <property name="jdbcUrl">
@@ -50,27 +51,44 @@
     </bean>
     <bean id="transactionManagerDB2" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSourceDB2"/>
+        <property name="defaultTimeout" value="10"/>
     </bean>
 
     <bean id="jdbcTemplateDB2" class="org.springframework.jdbc.core.JdbcTemplate">
         <property name="dataSource" ref="dataSourceDB2"/>
     </bean>
 
-    <!--<bean id="transactionTemplateDB2" class="org.springframework.transaction.support.TransactionTemplate">
+    <bean id="transactionTemplateDB2" class="org.springframework.transaction.support.TransactionTemplate">
         <property name="transactionManager" ref="transactionManagerDB2"/>
     </bean>
 
     <bean id="sqlSessionFactoryDB2" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSourceDB2"/>
         <property name="configLocation" value="classpath:mybatis/mybatis.xml"/>
-        <property name="mapperLocations" value="classpath:mybatis/db2/*Mapper.xml"/>
+        <property name="mapperLocations">
+            <array>
+                <value>classpath:mybatis/db2/*Mapper.xml</value>
+                <value>classpath:mybatis/mapper/*Mapper.xml</value>
+            </array>
+        </property>
+    </bean>
+
+    <!-- 配置扫描器 -->
+    <bean id="beanNameGeneratorDB2" class="com.lanmao.data.MapperBeanNameGenerator">
+        <property name="suffix" value="DB2"/>
+    </bean>
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="nameGenerator" ref="beanNameGeneratorDB2"/>
+        <property name="basePackage" value="com.lanmao.data.sync.dao.db2" />
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactoryDB2" />
     </bean>
 
     <bean id="sqlSessionTemplateDB2" class="org.mybatis.spring.SqlSessionTemplate">
         <constructor-arg>
             <ref bean="sqlSessionFactoryDB2"/>
         </constructor-arg>
-    </bean>-->
+    </bean>
 
 
 </beans>
