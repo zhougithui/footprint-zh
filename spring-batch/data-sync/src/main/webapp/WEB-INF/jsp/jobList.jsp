@@ -43,23 +43,27 @@
         var jobById = false;
         function obtainInit(){
             $.ajax({
-                url: '${context}/manager/minMaxDay/' + $(".jobName")[0].value,
+                url: '${context}/manager/minMaxId/' + $(".jobName")[0].value,
                 type: 'post',
                 success: function (data) {
-                    jobById = false;
+                    jobById = true;
                     if(data == ''){
                         alert('恭喜，空表，无需同步！');
-                    }else{
-                        $('#init').html('DB2-数据库最小日期：' + data.minDay + '/数据库最大日期：' + data.maxDay + '/相差天数：' + data.daysDiff);
+                    }else {
+                        $('#init').html('DB2-数据库最小ID：' + data.minId + '/数据库最大ID：' + data.maxId + '/相差ID数：' + data.idDiff);
                     }
                 },
                 error: function(e){
                     $.ajax({
-                        url: '${context}/manager/minMaxId/' + $(".jobName")[0].value,
+                        url: '${context}/manager/minMaxDay/' + $(".jobName")[0].value,
                         type: 'post',
                         success: function (data) {
-                            jobById = true;
-                            $('#init').html('DB2-数据库最小ID：' + data.minId + '/数据库最大ID：' + data.maxId + '/相差ID数：' + data.idDiff);
+                            jobById = false;
+                            if(data == ''){
+                                alert('恭喜，空表，无需同步！');
+                            }else{
+                                $('#init').html('DB2-数据库最小日期：' + data.minDay + '/数据库最大日期：' + data.maxDay + '/相差天数：' + data.daysDiff);
+                            }
                         },
                         error: function(e){
 

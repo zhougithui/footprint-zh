@@ -11,16 +11,30 @@
   <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime" />
 </resultMap>
 
-<select id="queryList" resultMap="BaseResultMap" parameterType="com.lanmao.data.sync.client.param.PageQueryParam">
-  select * from (
-  select t.*, ROW_NUMBER() OVER(order by CREATE_TIME) AS NUM from LM_PAY.${tableName} t
-  where
-  CREATE_TIME &gt;= #{startTime,jdbcType=TIMESTAMP}
-  and
-  CREATE_TIME &lt; #{endTime,jdbcType=TIMESTAMP}
-  ) temp
-  where num &gt; #{start,jdbcType=BIGINT}
-  and num &lt;= #{end,jdbcType=BIGINT}
-</select>
+  <sql id="Base_Column_List">
+    ID, CHANNEL, CHANNEL_ACCESS_NO, ACCESS_SYSTEM_NO, ENCRYPT_KEY, CREATE_TIME, MODIFY_TIME
+  </sql>
+
+  <select id="queryList" resultMap="BaseResultMap" parameterType="com.lanmao.data.sync.client.param.PageQueryParam">
+    select * from (
+    <if test="startId != null">
+      select <include refid="Base_Column_List"/>, ROW_NUMBER() OVER(order by ID) AS NUM from LM_PAY.${tableName}
+      where
+      ID &gt;= #{startId,jdbcType=BIGINT}
+      and
+      ID &lt; #{endId,jdbcType=BIGINT}
+    </if>
+
+    <if test="startId == null">
+      select <include refid="Base_Column_List"/>, ROW_NUMBER() OVER(order by CREATE_TIME) AS NUM from LM_PAY.${tableName}
+      where
+      CREATE_TIME &gt;= #{startTime,jdbcType=TIMESTAMP}
+      and
+      CREATE_TIME &lt; #{endTime,jdbcType=TIMESTAMP}
+    </if>
+    ) temp
+    where num &gt; #{start,jdbcType=BIGINT}
+    and num &lt;= #{end,jdbcType=BIGINT}
+  </select>
 
 </mapper>

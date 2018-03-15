@@ -310,13 +310,24 @@
     where ID = #{id,jdbcType=BIGINT}
   </update>
 
+
   <select id="queryList" resultMap="BaseResultMap" parameterType="com.lanmao.data.sync.client.param.PageQueryParam">
     select * from (
-    select <include refid="Base_Column_List"/>, ROW_NUMBER() OVER(order by CREATE_TIME) AS NUM from LM_PAY.${tableName}
-    where
-    CREATE_TIME &gt;= #{startTime,jdbcType=TIMESTAMP}
-    and
-    CREATE_TIME &lt; #{endTime,jdbcType=TIMESTAMP}
+    <if test="startId != null">
+      select <include refid="Base_Column_List"/>, ROW_NUMBER() OVER(order by ID) AS NUM from LM_PAY.${tableName}
+      where
+      ID &gt;= #{startId,jdbcType=BIGINT}
+      and
+      ID &lt; #{endId,jdbcType=BIGINT}
+    </if>
+
+    <if test="startId == null">
+      select <include refid="Base_Column_List"/>, ROW_NUMBER() OVER(order by CREATE_TIME) AS NUM from LM_PAY.${tableName}
+      where
+      CREATE_TIME &gt;= #{startTime,jdbcType=TIMESTAMP}
+      and
+      CREATE_TIME &lt; #{endTime,jdbcType=TIMESTAMP}
+    </if>
     ) temp
     where num &gt; #{start,jdbcType=BIGINT}
     and num &lt;= #{end,jdbcType=BIGINT}
