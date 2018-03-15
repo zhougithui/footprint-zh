@@ -9,6 +9,7 @@ import com.lanmao.data.sync.http.async.Notify;
 import com.lanmao.data.sync.http.async.NotifyObserver;
 import com.lanmao.data.sync.param.TaskStatus;
 import com.lanmao.data.sync.param.Tasklet;
+import com.lanmao.data.sync.redis.RedisUtils;
 import com.lanmao.data.sync.service.JobInfoService;
 import com.lanmao.data.sync.utils.GsonUtils;
 import com.lanmao.runtime.util.http.HttpUtils;
@@ -27,6 +28,7 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -54,7 +56,6 @@ public class BatchSaveDataService {
      */
     @Transactional
     public void saveList(List<DataSyncPacket> packetList){
-        System.out.println("###########" + count.addAndGet(packetList.size()));
         logger.info("持久化数据-START");
         for(DataSyncPacket packet : packetList){
             boolean saveSucc = true;
@@ -75,17 +76,16 @@ public class BatchSaveDataService {
                         BeanUtils.populate(entity, (Map<String, ? extends Object>) infoMap);
                         insert(mapper, entity);
                         succCount++;
-                        desc.append("SUCC");
                     } catch (Exception e){
                         logger.error("持久化数据异常");
                         saveSucc = false;
-                        desc.append("/" + e.getMessage());
+                        desc.append(e.getMessage() + "/");
                         failCount++;
                     }
                 }
             }catch (Exception e) {
                 logger.error("未知异常", e);
-                desc.append("/" + e.getMessage());
+                desc.append(e.getMessage() + "/");
             }
 
             try {
@@ -109,9 +109,17 @@ public class BatchSaveDataService {
                             "update status");
                     asyncNotifier.send(notify, observer);
 
+                    Notify increment = new Notify(
+                            tasklet.getId(),
+                            new URL(serverUrl + "manager/incr/" + tasklet.getJobName()),
+                            "",
+                            null,
+                            "ince receive size");
+                    asyncNotifier.send(increment, observer);
+
                     //HttpUtils.post(new URL(serverUrl + "manager/updateJobStatus"), Charset.forName("UTF-8"), params);
                 } catch (IOException e) {
-                    logger.error("http更新状态失败，{}", params.get("taskletId"));
+                    logger.error("http更新状态失败，{}", params);
                 }
             } catch (Exception e) {
                 logger.error("更新状态失败", e);

@@ -83,7 +83,7 @@ class DataQueryByIdTask extends Thread{
                 //是否拥有下一页
                 if(objList.size() < param.getPageSize()){
                     hasNext = false;
-                    //logger.info("读取到末尾，无需分页");
+                    logger.info("读取到末尾，无需分页");
                 }else{
                     //翻页
                     param.nextPage();
@@ -106,6 +106,8 @@ class DataQueryByIdTask extends Thread{
                     tasklet.setStartTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")));
                     tasklet.setId(dataSyncPacket.getQueryRange() + "/" + dataSyncPacket.getPacketSeq());
 
+                    RedisUtils.increment(jobName + "-send", 1l, TimeUnit.DAYS);
+
                     RedisUtils.hset(jobName, tasklet.getId(), tasklet, 1l, TimeUnit.DAYS);
 
                     //发送数据
@@ -116,10 +118,10 @@ class DataQueryByIdTask extends Thread{
                 }
             }else{
                 hasNext = false;
-                //logger.info("数据查询为空");
+                logger.info("数据查询为空");
             }
         }
 
-        //logger.info("数据检索任务完成");
+        logger.info("数据检索任务完成");
     }
 }

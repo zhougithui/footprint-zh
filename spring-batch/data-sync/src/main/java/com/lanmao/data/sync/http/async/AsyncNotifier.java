@@ -53,7 +53,7 @@ public class AsyncNotifier {
 
 	 private ScheduledExecutorService schedule;
 
-	private ConcurrentHashMap<Future<HttpResponse>, Object> futures = new ConcurrentHashMap<Future<HttpResponse>, Object>();
+	private ConcurrentHashMap<Future<HttpResponse>, Object> futures = new ConcurrentHashMap<>();
 	
 	private int queueSize = 100000;
 	
@@ -66,7 +66,7 @@ public class AsyncNotifier {
 		queueSize = 100000;
 		proxyHost = null;
 		messageLoggerLength = 100;
-		executor = new ThreadPoolExecutor(20, 20, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>(queueSize));
+		executor = new ThreadPoolExecutor(100, 100, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(queueSize));
 		
 		
 		// 清理漏掉的
@@ -171,7 +171,7 @@ public class AsyncNotifier {
 				post.setEntity(z);
 			}
 
-			future = httpclient.execute(post, new FutureCallbackCatcher<HttpResponse>(this));
+			future = httpclient.execute(post, new FutureCallbackCatcher<>(this));
 			futures.put(future, future);
 		}
 
@@ -209,7 +209,7 @@ public class AsyncNotifier {
 				String message = new String(buf, 0, l);
 				
 //				String message = IOUtils.toString(result.getEntity().getContent(), charset);
-				logger.info("{}返回结果前{}个字节:{}", this, bufSize, StringUtils.left(message, bufSize));
+				//logger.info("{}返回结果前{}个字节:{}", this, bufSize, StringUtils.left(message, bufSize));
 				if (message.trim().equalsIgnoreCase("success")) {
 					success = true;
 				} else {

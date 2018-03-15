@@ -9,6 +9,8 @@ import com.lanmao.data.sync.param.Tasklet;
 import com.lanmao.data.sync.redis.RedisUtils;
 import com.lanmao.data.sync.service.JobInfoService;
 import com.lanmao.data.sync.utils.GsonUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +33,7 @@ import java.util.concurrent.TimeUnit;
 @Controller
 @RequestMapping("manager")
 public class DataSyncManagerController {
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Resource
     private JobInfoService jobInfoService;
@@ -86,6 +89,11 @@ public class DataSyncManagerController {
         return "SUCCESS";
     }
 
+    /**
+     * 更新状态，接收端调用
+     * @param taskletJson
+     * @return
+     */
     @RequestMapping("updateJobStatus")
     @ResponseBody
     public String updateJob(String taskletJson){
@@ -120,15 +128,50 @@ public class DataSyncManagerController {
         return taskletMap != null ? taskletMap.values() : new ArrayList<>();
     }
 
+    /**
+     * 根据日期排序
+     * @param jobName
+     * @return
+     */
     @RequestMapping("minMaxDay/{jobName}")
     @ResponseBody
     public MinMaxDay minMaxDay(@PathVariable String jobName){
         return minMaxDayMapper.minMaxDay(jobInfoService.getTableName(jobName));
     }
 
+    /**
+     * 根据ID排序
+     * @param jobName
+     * @return
+     */
     @RequestMapping("minMaxId/{jobName}")
     @ResponseBody
     public MinMaxId minMaxId(@PathVariable String jobName){
         return minMaxDayMapper.minMaxId(jobInfoService.getTableName(jobName));
+    }
+
+    @RequestMapping("incr/{jobName}")
+    @ResponseBody
+    public String incrReceiveCount(@PathVariable String jobName){
+        try {
+            RedisUtils.increment(jobName + "-receive", 1l, TimeUnit.DAYS);
+        } catch (Exception e) {
+            logger.error("更新数据包持久化数量失败");
+        }
+        return "SUCCESS";
+    }
+
+    @RequestMapping("checkCount/{jobName}")
+    @ResponseBody
+    public String checkCount(@PathVariable String jobName){
+        try {
+            Long sendPacketSize = RedisUtils.get(jobName + "-send");
+            Long receivePacketSize = RedisUtils.get(jobName + "-receive");
+
+            return "send=" + sendPacketSize + ";receive=" + receivePacketSize;
+        } catch (Exception e) {
+            logger.error("更新数据包持久化数量失败");
+        }
+        return "0-0";
     }
 }

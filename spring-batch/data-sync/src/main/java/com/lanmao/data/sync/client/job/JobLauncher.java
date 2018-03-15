@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
 public class JobLauncher implements DisposableBean {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    public static ThreadPoolExecutor poolExecutor = new ThreadPoolExecutor(10, 10, 10, TimeUnit.SECONDS,
+    public static ThreadPoolExecutor poolExecutor = new ThreadPoolExecutor(10, 10, 0, TimeUnit.SECONDS,
             new LinkedBlockingQueue<>(),new DefaultThreadFactory("data-sync-producer"), new DataSyncRejectedExecutionHandler());
 
     @Resource
@@ -54,6 +54,7 @@ public class JobLauncher implements DisposableBean {
         for(DataQueryByIdTask task : taskList){
             poolExecutor.execute(task);
         }
+        logger.info("开始执行任务{}，{}，{}", jobName, start, offset);
     }
 }
 

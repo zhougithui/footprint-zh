@@ -113,6 +113,7 @@ class DataQueryTask extends Thread{
                     tasklet.setId(dataSyncPacket.getQueryRange() + "/" + dataSyncPacket.getPacketSeq());
 
                     RedisUtils.hset(jobName, tasklet.getId(), tasklet, 1l, TimeUnit.DAYS);
+                    RedisUtils.increment(jobName + "-send", 1l, TimeUnit.DAYS);
 
                     //发送数据
                     //logger.info("发送数据页，{}", tasklet.getId());

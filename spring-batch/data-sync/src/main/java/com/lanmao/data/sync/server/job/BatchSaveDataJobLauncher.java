@@ -24,7 +24,7 @@ public class BatchSaveDataJobLauncher implements DisposableBean {
     /*线程池状态*/
     public static AtomicBoolean RUNNING = new AtomicBoolean(false);
     public static DataSyncBlockQueue<DataSyncPacket> queue = new DataSyncBlockQueue<>();
-    public static ThreadPoolExecutor poolExecutor = new ThreadPoolExecutor(20, 20, 10, TimeUnit.SECONDS,
+    public static ThreadPoolExecutor poolExecutor = new ThreadPoolExecutor(20, 20, 0, TimeUnit.SECONDS,
             new LinkedBlockingQueue<>(),new DefaultThreadFactory("data-sync-consumer"), new BatchSaveRejectedExecutionHandler());
 
     /**

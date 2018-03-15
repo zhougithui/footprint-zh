@@ -27,13 +27,11 @@
             }
         }
 
-        function getJobStatus() {
-            $("#jobStatusAddress").attr("href", "${host}${context}/manager/status/" + $(".jobName")[0].value);
-        }
-
         function chooseJob(radio){
             $(".jobName").val(radio.value);
             $("#failJob").attr("href", "${host}${context}/manager/failJobList/" + radio.value);
+            $("#jobStatusAddress").attr("href", "${host}${context}/manager/status/" + $(".jobName")[0].value);
+            $("#checkCount").attr("href", "${host}${context}/manager/checkCount/" + $(".jobName")[0].value);
         }
 
         function adjustPoolSize(){
@@ -97,8 +95,8 @@
 
     <h4>任务状态</h4>
     任务名称：<input type="text" class="jobName" >
-    <input type="button" value="确认" onclick="getJobStatus()">
-    <a id="jobStatusAddress" href="#" target="_blank">查看</a>
+    <a id="jobStatusAddress" href="#" target="_blank">查看状态</a>
+    <a id="checkCount" href="#" target="_blank">查看发送接收</a>
 
     <h4>失败任务列表</h4>
     任务名称：<input type="text" class="jobName" >

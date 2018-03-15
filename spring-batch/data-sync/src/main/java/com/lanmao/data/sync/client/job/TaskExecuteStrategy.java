@@ -62,8 +62,7 @@ public class TaskExecuteStrategy {
     public List<DataQueryByIdTask> map(String jobName, long start, long offset) {
         List<DataQueryByIdTask> taskList = new ArrayList<>();
 
-        long taskSize = (offset-start) / 10_000l;
-        taskSize += (offset-start) % 10_000l == 0 ? 0 : 1;
+        long taskSize = (offset-start) / 10_000l + 1;
         for(int i=1; i<=taskSize; i++){
             DataQueryByIdTask task = new DataQueryByIdTask(jobName, queryService);
             task.setStartPoint(start + "");

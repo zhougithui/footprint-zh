@@ -78,7 +78,7 @@ public class DataSender implements DisposableBean{
         }
     }
 
-    public static ThreadPoolExecutor poolExecutor = new ThreadPoolExecutor(10, 10, 10, TimeUnit.SECONDS,
+    public static ThreadPoolExecutor poolExecutor = new ThreadPoolExecutor(10, 10, 0, TimeUnit.SECONDS,
             new LinkedBlockingQueue<>(),new DefaultThreadFactory("data-sync-sender"), new DataSyncRejectedExecutionHandler());
 
     @Override

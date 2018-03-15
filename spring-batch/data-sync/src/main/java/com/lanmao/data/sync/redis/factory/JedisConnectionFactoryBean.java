@@ -188,6 +188,7 @@ public class JedisConnectionFactoryBean implements FactoryBean<JedisConnectionFa
     }
 
     private RedisTemplate<String, CacheValueWrapper<Object>> redisTemplate = new RedisTemplate<>();
+    private RedisTemplate<String, Long> redisTemplateObj = new RedisTemplate<>();
 
     @Nullable
     @Override
@@ -230,10 +231,15 @@ public class JedisConnectionFactoryBean implements FactoryBean<JedisConnectionFa
         redisTemplate.setDefaultSerializer(new GsonSerializer());
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setHashKeySerializer(new StringRedisSerializer());
-
         redisTemplate.afterPropertiesSet();
-
         RedisUtils.setRedisTemplate(redisTemplate);
+
+        redisTemplateObj.setConnectionFactory(jedisConnectionFactory);
+        redisTemplateObj.setDefaultSerializer(new StringRedisSerializer());
+        redisTemplateObj.afterPropertiesSet();
+        RedisUtils.setRedisTemplateObj(redisTemplateObj);
+
+
         RedisUtils.setExpireTime(getDefaultExpiredSeconds());
         return jedisConnectionFactory;
     }

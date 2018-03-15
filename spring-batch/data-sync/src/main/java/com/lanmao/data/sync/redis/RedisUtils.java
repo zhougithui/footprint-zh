@@ -7,9 +7,11 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.support.atomic.RedisAtomicLong;
 
 import java.io.UnsupportedEncodingException;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -22,6 +24,8 @@ public class RedisUtils {
     private static final Logger logger = LoggerFactory.getLogger(RedisUtils.class);
 
     private static RedisTemplate<String, CacheValueWrapper<Object>> redisTemplate;
+    private static RedisTemplate<String, Long> redisTemplateObj;
+    private static Map<String, RedisAtomicLong> redisAtomicLongMap = new ConcurrentHashMap<>();
     private static long DEFAULT_EXPIRE_SECONDS = 10000;
     private static TimeUnit DEFAULT_UNIT = TimeUnit.SECONDS;
 
@@ -31,6 +35,10 @@ public class RedisUtils {
 
     public static void setRedisTemplate(RedisTemplate<String, CacheValueWrapper<Object>> redisTemplate) {
         RedisUtils.redisTemplate = redisTemplate;
+    }
+
+    public static void setRedisTemplateObj(RedisTemplate<String, Long> redisTemplateObj) {
+        RedisUtils.redisTemplateObj = redisTemplateObj;
     }
 
     /**
@@ -66,6 +74,46 @@ public class RedisUtils {
         try {
             redisTemplate.opsForValue().set(key, wrapper(value));
             expire(key, expireTime, unit);
+        } catch (Exception e) {
+            logger.error("redis缓存操作失败", e);
+        }
+    }
+
+    /**
+     * 获取自增值
+     * @param key 键
+     * @param value 值
+     * @param expireTime 过期时间
+     * @param unit 时间单位
+     */
+    public static Long get(String key){
+        try {
+            RedisAtomicLong redisAtomicLong = redisAtomicLongMap.get(key);
+            if(redisAtomicLong != null){
+                return redisAtomicLong.get();
+            }
+        } catch (Exception e) {
+            logger.error("redis缓存操作失败", e);
+        }
+        return 0L;
+    }
+
+    /**
+     * 自增
+     * @param key 键
+     * @param value 值
+     * @param expireTime 过期时间
+     * @param unit 时间单位
+     */
+    public static void increment(String key, long expireTime, TimeUnit unit){
+        try {
+            RedisAtomicLong redisAtomicLong = redisAtomicLongMap.get(key);
+            if(redisAtomicLong == null){
+                redisAtomicLong = new RedisAtomicLong(key, redisTemplateObj.getConnectionFactory(), 0);
+                redisAtomicLongMap.put(key, redisAtomicLong);
+            }
+            redisAtomicLong.incrementAndGet();
+            redisAtomicLong.expire(expireTime, unit);
         } catch (Exception e) {
             logger.error("redis缓存操作失败", e);
         }
