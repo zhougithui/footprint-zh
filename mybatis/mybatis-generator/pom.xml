@@ -104,6 +104,16 @@
                         <artifactId>ojdbc6</artifactId>
                         <version>11.2.0.1</version>
                     </dependency>
+                    <dependency>
+                        <groupId>com.ibm.db2</groupId>
+                        <artifactId>db2jcc4</artifactId>
+                        <version>4.21.29</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>com.ibm.db2</groupId>
+                        <artifactId>db2jcc_license_cu</artifactId>
+                        <version>1.4.2_9.7</version>
+                    </dependency>
                     <!--
                         自定义的plugin
                     -->

@@ -7,6 +7,8 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -21,6 +23,7 @@ import java.util.Objects;
  * @author hui.zhou 9:29 2018/2/12
  */
 public class ExampleCompareAndReplaceUtils {
+    private static final Logger logger = LoggerFactory.getLogger(ExampleCompareAndReplaceUtils.class);
     static String MAPPER_CLASSPATH = "mybatis/mapper";
 
     /**
@@ -51,7 +54,7 @@ public class ExampleCompareAndReplaceUtils {
      */
     public static void replaceExampleFile(String projectPathToReplace){
         Map<String, File> newJavaFileMap = parseJavaFile();
-
+        logger.info("新的example文件数量为，{}", newJavaFileMap.size());
         String path = FpStringBuilder.buildDefault()
                 .append(projectPathToReplace)
                 .append(File.separator)
@@ -82,6 +85,7 @@ public class ExampleCompareAndReplaceUtils {
                             Files.delete(Paths.get(javaFilePath));
 
                             File file = new File(javaFilePath);
+                            logger.info("替换example文件，{}", packageName);
                             FileWriter fileWriter = new FileWriter(file);
                             BufferedWriter writer = new BufferedWriter(fileWriter);
 

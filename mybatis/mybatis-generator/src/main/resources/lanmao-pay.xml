@@ -20,21 +20,20 @@
         </javaTypeResolver>-->
 
         <javaModelGenerator targetPackage="mybatis"
-                            targetProject="D:\worksoft\IntelliJIDEA\workspace\footprint-zh\mybatis-study\mybatis-generator\src\main\resources">
+                            targetProject="D:\worksoft\IntelliJIDEA\workspace\footprint-zh\mybatis\mybatis-generator\src\main\resources">
         </javaModelGenerator>
 
         <sqlMapGenerator targetPackage="mybatis/mapper"
-                         targetProject="D:\worksoft\IntelliJIDEA\workspace\footprint-zh\mybatis-study\mybatis-generator\src\main\resources">
+                         targetProject="D:\worksoft\IntelliJIDEA\workspace\footprint-zh\mybatis\mybatis-generator\src\main\resources">
         </sqlMapGenerator>
 
         <javaClientGenerator type="XMLMAPPER" targetPackage="mybatis"
-                             targetProject="D:\worksoft\IntelliJIDEA\workspace\footprint-zh\mybatis-study\mybatis-generator\src\main\resources">
+                             targetProject="D:\worksoft\IntelliJIDEA\workspace\footprint-zh\mybatis\mybatis-generator\src\main\resources">
         </javaClientGenerator>
 
-        <table schema="LM_PAY" tableName="T_AUTH_ORDER" domainObjectName="AuthOrderEntity">
-            <generatedKey column="ID" sqlStatement="select SEQ_T_AUTH_ORDER.nextVal from dual"/>
+        <table schema="LM_PAY" tableName="T_PAYMENT_CHANNEL_CONFIG" domainObjectName="PaymentChannelConfigEntity">
+            <generatedKey column="ID" sqlStatement="select SEQ_T_PAYMENT_CHANNEL_CONFIG.nextVal from dual" identity="false"/>
             <columnOverride column="ID" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-            <columnOverride column="CONSUME_TIME" jdbcType="NUMERIC"/>
         </table>
 
     </context>

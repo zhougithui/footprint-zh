@@ -11,6 +11,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>data-sync</module>
+        <module>data-sync-batch</module>
     </modules>
     <artifactId>spring-batch</artifactId>
 

@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lanmao.data.sync.dao.oracle.PaymentProfitDailyEntityMapper">
+  <resultMap id="BaseResultMap" type="com.lanmao.data.sync.dao.entity.PaymentProfitDailyEntity">
+    <id column="ID" jdbcType="NUMERIC" property="id" />
+    <result column="PAY_COMPANY" jdbcType="VARCHAR" property="payCompany" />
+    <result column="MERCHANT_NO" jdbcType="VARCHAR" property="merchantNo" />
+    <result column="PRODUCT_NAME" jdbcType="VARCHAR" property="productName" />
+    <result column="TOTAL_AMOUNT" jdbcType="NUMERIC" property="totalAmount" />
+    <result column="TOTAL_COUNT" jdbcType="NUMERIC" property="totalCount" />
+    <result column="COUNT_DATE" jdbcType="TIMESTAMP" property="countDate" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, PAY_COMPANY, MERCHANT_NO, PRODUCT_NAME, TOTAL_AMOUNT, TOTAL_COUNT, COUNT_DATE, 
+    CREATE_TIME, UPDATE_TIME
+  </sql>
+  <select id="selectByExample" parameterType="com.lanmao.data.sync.dao.entity.PaymentProfitDailyEntityExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from LM_PAY.T_PAYMENT_PROFIT_DAILY
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from LM_PAY.T_PAYMENT_PROFIT_DAILY
+    where ID = #{id,jdbcType=NUMERIC}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from LM_PAY.T_PAYMENT_PROFIT_DAILY
+    where ID = #{id,jdbcType=NUMERIC}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.lanmao.data.sync.dao.entity.PaymentProfitDailyEntityExample">
+    delete from LM_PAY.T_PAYMENT_PROFIT_DAILY
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyProperty="id" parameterType="com.lanmao.data.sync.dao.entity.PaymentProfitDailyEntity" useGeneratedKeys="false">
+    insert into LM_PAY.T_PAYMENT_PROFIT_DAILY (ID, PAY_COMPANY, MERCHANT_NO,
+      PRODUCT_NAME, TOTAL_AMOUNT, TOTAL_COUNT,
+    COUNT_DATE, CREATE_TIME, UPDATE_TIME
+      )
+    values (#{id,jdbcType=NUMERIC}, #{payCompany,jdbcType=VARCHAR}, #{merchantNo,jdbcType=VARCHAR}, 
+      #{productName,jdbcType=VARCHAR}, #{totalAmount,jdbcType=NUMERIC}, #{totalCount,jdbcType=NUMERIC},
+    #{countDate,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" keyProperty="id" parameterType="com.lanmao.data.sync.dao.entity.PaymentProfitDailyEntity" useGeneratedKeys="false">
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Long">
+      select SEQ_T_PAYMENT_PROFIT_DAILY.nextVal from dual
+    </selectKey>
+    insert into LM_PAY.T_PAYMENT_PROFIT_DAILY
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      ID,
+      <if test="payCompany != null">
+        PAY_COMPANY,
+      </if>
+      <if test="merchantNo != null">
+        MERCHANT_NO,
+      </if>
+      <if test="productName != null">
+        PRODUCT_NAME,
+      </if>
+      <if test="totalAmount != null">
+        TOTAL_AMOUNT,
+      </if>
+      <if test="totalCount != null">
+        TOTAL_COUNT,
+      </if>
+      <if test="countDate != null">
+        COUNT_DATE,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      #{id,jdbcType=NUMERIC},
+      <if test="payCompany != null">
+        #{payCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null">
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null">
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="totalAmount != null">
+        #{totalAmount,jdbcType=NUMERIC},
+      </if>
+      <if test="totalCount != null">
+        #{totalCount,jdbcType=NUMERIC},
+      </if>
+      <if test="countDate != null">
+        #{countDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lanmao.data.sync.dao.entity.PaymentProfitDailyEntityExample" resultType="java.lang.Integer">
+    select count(*) from LM_PAY.T_PAYMENT_PROFIT_DAILY
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update LM_PAY.T_PAYMENT_PROFIT_DAILY
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=NUMERIC},
+      </if>
+      <if test="record.payCompany != null">
+        PAY_COMPANY = #{record.payCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="record.merchantNo != null">
+        MERCHANT_NO = #{record.merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productName != null">
+        PRODUCT_NAME = #{record.productName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalAmount != null">
+        TOTAL_AMOUNT = #{record.totalAmount,jdbcType=NUMERIC},
+      </if>
+      <if test="record.totalCount != null">
+        TOTAL_COUNT = #{record.totalCount,jdbcType=NUMERIC},
+      </if>
+      <if test="record.countDate != null">
+        COUNT_DATE = #{record.countDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update LM_PAY.T_PAYMENT_PROFIT_DAILY
+    set ID = #{record.id,jdbcType=NUMERIC},
+    PAY_COMPANY = #{record.payCompany,jdbcType=VARCHAR},
+      MERCHANT_NO = #{record.merchantNo,jdbcType=VARCHAR},
+    PRODUCT_NAME = #{record.productName,jdbcType=VARCHAR},
+      TOTAL_AMOUNT = #{record.totalAmount,jdbcType=NUMERIC},
+    TOTAL_COUNT = #{record.totalCount,jdbcType=NUMERIC},
+      COUNT_DATE = #{record.countDate,jdbcType=TIMESTAMP},
+    CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lanmao.data.sync.dao.entity.PaymentProfitDailyEntity">
+    update LM_PAY.T_PAYMENT_PROFIT_DAILY
+    <set>
+      <if test="payCompany != null">
+        PAY_COMPANY = #{payCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null">
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null">
+        PRODUCT_NAME = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="totalAmount != null">
+        TOTAL_AMOUNT = #{totalAmount,jdbcType=NUMERIC},
+      </if>
+      <if test="totalCount != null">
+        TOTAL_COUNT = #{totalCount,jdbcType=NUMERIC},
+      </if>
+      <if test="countDate != null">
+        COUNT_DATE = #{countDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=NUMERIC}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lanmao.data.sync.dao.entity.PaymentProfitDailyEntity">
+    update LM_PAY.T_PAYMENT_PROFIT_DAILY
+    set PAY_COMPANY = #{payCompany,jdbcType=VARCHAR},
+    MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      PRODUCT_NAME = #{productName,jdbcType=VARCHAR},
+    TOTAL_AMOUNT = #{totalAmount,jdbcType=NUMERIC},
+      TOTAL_COUNT = #{totalCount,jdbcType=NUMERIC},
+    COUNT_DATE = #{countDate,jdbcType=TIMESTAMP},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+    UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=NUMERIC}
+  </update>
+  <insert id="batchInsert" parameterType="com.lanmao.data.sync.dao.entity.PaymentProfitDailyEntity">
+    insert into LM_PAY.T_PAYMENT_PROFIT_DAILY(PAY_COMPANY, MERCHANT_NO,
+            PRODUCT_NAME, TOTAL_AMOUNT, TOTAL_COUNT, COUNT_DATE, CREATE_TIME,
+    UPDATE_TIME)
+         values
+    <foreach collection="list" index="index" item="item" separator=",">
+      (#{item.payCompany},#{item.merchantNo},#{item.productName},#{item.totalAmount},
+      #{item.totalCount},#{item.countDate},#{item.createTime},#{item.updateTime})
+    </foreach>
+  </insert>
+  <select id="countMonthlyProfit" resultMap="BaseResultMap">
+    select 
+       PAY_COMPANY,
+    MERCHANT_NO,
+       PRODUCT_NAME,
+    sum(TOTAL_AMOUNT) as TOTAL_AMOUNT,
+       sum(TOTAL_COUNT) as TOTAL_COUNT
+    from LM_PAY.T_PAYMENT_PROFIT_DAILY where COUNT_DATE
+    &gt;
+    =#{startDate} and COUNT_DATE
+    &lt;
+    = #{endDate} and PAY_COMPANY=#{payCompany,jdbcType=VARCHAR}
+       group by PRODUCT_NAME,MERCHANT_NO,PAY_COMPANY
+  </select>
+</mapper>

@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lanmao.data.sync.dao.oracle.CertOrderEntityMapper">
+  <resultMap id="BaseResultMap" type="com.lanmao.data.sync.dao.entity.CertOrderEntity">
+    <id column="ID" jdbcType="NUMERIC" property="id" />
+    <result column="SUBJECT_NO" jdbcType="VARCHAR" property="subjectNo" />
+    <result column="STATUS" jdbcType="VARCHAR" property="status" />
+    <result column="INITIATOR" jdbcType="VARCHAR" property="initiator" />
+    <result column="REQUEST_NO" jdbcType="VARCHAR" property="requestNo" />
+    <result column="ORDER_NO" jdbcType="VARCHAR" property="orderNo" />
+    <result column="CORP_NAME" jdbcType="VARCHAR" property="corpName" />
+    <result column="CREDIT_CODE" jdbcType="VARCHAR" property="creditCode" />
+    <result column="REG_NO" jdbcType="VARCHAR" property="regNo" />
+    <result column="ORG_CODE" jdbcType="VARCHAR" property="orgCode" />
+    <result column="FR_NAME" jdbcType="VARCHAR" property="frName" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="COMPLETE_TIME" jdbcType="TIMESTAMP" property="completeTime" />
+    <result column="MEMBER_NO" jdbcType="VARCHAR" property="memberNo" />
+    <result column="CERT_CHANNEL" jdbcType="VARCHAR" property="certChannel" />
+    <result column="ERROR_CODE" jdbcType="VARCHAR" property="errorCode" />
+    <result column="ERROR_MSG" jdbcType="VARCHAR" property="errorMsg" />
+    <result column="MANAGE_STATE" jdbcType="VARCHAR" property="manageState" />
+    <result column="EXTEND_MSG" jdbcType="VARCHAR" property="extendMsg" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, SUBJECT_NO, STATUS, INITIATOR, REQUEST_NO, ORDER_NO, CORP_NAME, CREDIT_CODE, 
+    REG_NO, ORG_CODE, FR_NAME, CREATE_TIME, COMPLETE_TIME, MEMBER_NO, CERT_CHANNEL, ERROR_CODE,
+    ERROR_MSG, MANAGE_STATE, EXTEND_MSG
+  </sql>
+  <select id="selectByExample" parameterType="com.lanmao.data.sync.dao.entity.CertOrderEntityExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from LM_PAY.T_CERT_ORDER
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from LM_PAY.T_CERT_ORDER
+    where ID = #{id,jdbcType=NUMERIC}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from LM_PAY.T_CERT_ORDER
+    where ID = #{id,jdbcType=NUMERIC}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.lanmao.data.sync.dao.entity.CertOrderEntityExample">
+    delete from LM_PAY.T_CERT_ORDER
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyProperty="id" parameterType="com.lanmao.data.sync.dao.entity.CertOrderEntity" useGeneratedKeys="false">
+    insert into LM_PAY.T_CERT_ORDER (ID, SUBJECT_NO, STATUS,
+      INITIATOR, REQUEST_NO, ORDER_NO,
+    CORP_NAME, CREDIT_CODE, REG_NO, 
+      ORG_CODE, FR_NAME, CREATE_TIME,
+    COMPLETE_TIME, MEMBER_NO, CERT_CHANNEL, 
+      ERROR_CODE, ERROR_MSG, MANAGE_STATE,
+    EXTEND_MSG)
+    values (#{id,jdbcType=NUMERIC}, #{subjectNo,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR},
+    #{initiator,jdbcType=VARCHAR}, #{requestNo,jdbcType=VARCHAR}, #{orderNo,jdbcType=VARCHAR}, 
+      #{corpName,jdbcType=VARCHAR}, #{creditCode,jdbcType=VARCHAR}, #{regNo,jdbcType=VARCHAR},
+    #{orgCode,jdbcType=VARCHAR}, #{frName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{completeTime,jdbcType=TIMESTAMP}, #{memberNo,jdbcType=VARCHAR}, #{certChannel,jdbcType=VARCHAR},
+    #{errorCode,jdbcType=VARCHAR}, #{errorMsg,jdbcType=VARCHAR}, #{manageState,jdbcType=VARCHAR}, 
+      #{extendMsg,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyProperty="id" parameterType="com.lanmao.data.sync.dao.entity.CertOrderEntity" useGeneratedKeys="false">
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Long">
+      select SEQ_T_CERT_ORDER.nextVal from dual
+    </selectKey>
+    insert into LM_PAY.T_CERT_ORDER
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      ID,
+      <if test="subjectNo != null">
+        SUBJECT_NO,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="initiator != null">
+        INITIATOR,
+      </if>
+      <if test="requestNo != null">
+        REQUEST_NO,
+      </if>
+      <if test="orderNo != null">
+        ORDER_NO,
+      </if>
+      <if test="corpName != null">
+        CORP_NAME,
+      </if>
+      <if test="creditCode != null">
+        CREDIT_CODE,
+      </if>
+      <if test="regNo != null">
+        REG_NO,
+      </if>
+      <if test="orgCode != null">
+        ORG_CODE,
+      </if>
+      <if test="frName != null">
+        FR_NAME,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="completeTime != null">
+        COMPLETE_TIME,
+      </if>
+      <if test="memberNo != null">
+        MEMBER_NO,
+      </if>
+      <if test="certChannel != null">
+        CERT_CHANNEL,
+      </if>
+      <if test="errorCode != null">
+        ERROR_CODE,
+      </if>
+      <if test="errorMsg != null">
+        ERROR_MSG,
+      </if>
+      <if test="manageState != null">
+        MANAGE_STATE,
+      </if>
+      <if test="extendMsg != null">
+        EXTEND_MSG,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      #{id,jdbcType=NUMERIC},
+      <if test="subjectNo != null">
+        #{subjectNo,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="initiator != null">
+        #{initiator,jdbcType=VARCHAR},
+      </if>
+      <if test="requestNo != null">
+        #{requestNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null">
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="corpName != null">
+        #{corpName,jdbcType=VARCHAR},
+      </if>
+      <if test="creditCode != null">
+        #{creditCode,jdbcType=VARCHAR},
+      </if>
+      <if test="regNo != null">
+        #{regNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null">
+        #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="frName != null">
+        #{frName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="completeTime != null">
+        #{completeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="memberNo != null">
+        #{memberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="certChannel != null">
+        #{certChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="errorCode != null">
+        #{errorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="errorMsg != null">
+        #{errorMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="manageState != null">
+        #{manageState,jdbcType=VARCHAR},
+      </if>
+      <if test="extendMsg != null">
+        #{extendMsg,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lanmao.data.sync.dao.entity.CertOrderEntityExample" resultType="java.lang.Integer">
+    select count(*) from LM_PAY.T_CERT_ORDER
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update LM_PAY.T_CERT_ORDER
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=NUMERIC},
+      </if>
+      <if test="record.subjectNo != null">
+        SUBJECT_NO = #{record.subjectNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        STATUS = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.initiator != null">
+        INITIATOR = #{record.initiator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.requestNo != null">
+        REQUEST_NO = #{record.requestNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderNo != null">
+        ORDER_NO = #{record.orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.corpName != null">
+        CORP_NAME = #{record.corpName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creditCode != null">
+        CREDIT_CODE = #{record.creditCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.regNo != null">
+        REG_NO = #{record.regNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgCode != null">
+        ORG_CODE = #{record.orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.frName != null">
+        FR_NAME = #{record.frName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.completeTime != null">
+        COMPLETE_TIME = #{record.completeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.memberNo != null">
+        MEMBER_NO = #{record.memberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.certChannel != null">
+        CERT_CHANNEL = #{record.certChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.errorCode != null">
+        ERROR_CODE = #{record.errorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.errorMsg != null">
+        ERROR_MSG = #{record.errorMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.manageState != null">
+        MANAGE_STATE = #{record.manageState,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extendMsg != null">
+        EXTEND_MSG = #{record.extendMsg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update LM_PAY.T_CERT_ORDER
+    set ID = #{record.id,jdbcType=NUMERIC},
+    SUBJECT_NO = #{record.subjectNo,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=VARCHAR},
+    INITIATOR = #{record.initiator,jdbcType=VARCHAR},
+      REQUEST_NO = #{record.requestNo,jdbcType=VARCHAR},
+    ORDER_NO = #{record.orderNo,jdbcType=VARCHAR},
+      CORP_NAME = #{record.corpName,jdbcType=VARCHAR},
+    CREDIT_CODE = #{record.creditCode,jdbcType=VARCHAR},
+      REG_NO = #{record.regNo,jdbcType=VARCHAR},
+    ORG_CODE = #{record.orgCode,jdbcType=VARCHAR},
+      FR_NAME = #{record.frName,jdbcType=VARCHAR},
+    CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      COMPLETE_TIME = #{record.completeTime,jdbcType=TIMESTAMP},
+    MEMBER_NO = #{record.memberNo,jdbcType=VARCHAR},
+      CERT_CHANNEL = #{record.certChannel,jdbcType=VARCHAR},
+    ERROR_CODE = #{record.errorCode,jdbcType=VARCHAR},
+      ERROR_MSG = #{record.errorMsg,jdbcType=VARCHAR},
+    MANAGE_STATE = #{record.manageState,jdbcType=VARCHAR},
+      EXTEND_MSG = #{record.extendMsg,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lanmao.data.sync.dao.entity.CertOrderEntity">
+    update LM_PAY.T_CERT_ORDER
+    <set>
+      <if test="subjectNo != null">
+        SUBJECT_NO = #{subjectNo,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="initiator != null">
+        INITIATOR = #{initiator,jdbcType=VARCHAR},
+      </if>
+      <if test="requestNo != null">
+        REQUEST_NO = #{requestNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null">
+        ORDER_NO = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="corpName != null">
+        CORP_NAME = #{corpName,jdbcType=VARCHAR},
+      </if>
+      <if test="creditCode != null">
+        CREDIT_CODE = #{creditCode,jdbcType=VARCHAR},
+      </if>
+      <if test="regNo != null">
+        REG_NO = #{regNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null">
+        ORG_CODE = #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="frName != null">
+        FR_NAME = #{frName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="completeTime != null">
+        COMPLETE_TIME = #{completeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="memberNo != null">
+        MEMBER_NO = #{memberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="certChannel != null">
+        CERT_CHANNEL = #{certChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="errorCode != null">
+        ERROR_CODE = #{errorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="errorMsg != null">
+        ERROR_MSG = #{errorMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="manageState != null">
+        MANAGE_STATE = #{manageState,jdbcType=VARCHAR},
+      </if>
+      <if test="extendMsg != null">
+        EXTEND_MSG = #{extendMsg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=NUMERIC}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lanmao.data.sync.dao.entity.CertOrderEntity">
+    update LM_PAY.T_CERT_ORDER
+    set SUBJECT_NO = #{subjectNo,jdbcType=VARCHAR},
+    STATUS = #{status,jdbcType=VARCHAR},
+      INITIATOR = #{initiator,jdbcType=VARCHAR},
+    REQUEST_NO = #{requestNo,jdbcType=VARCHAR},
+      ORDER_NO = #{orderNo,jdbcType=VARCHAR},
+    CORP_NAME = #{corpName,jdbcType=VARCHAR},
+      CREDIT_CODE = #{creditCode,jdbcType=VARCHAR},
+    REG_NO = #{regNo,jdbcType=VARCHAR},
+      ORG_CODE = #{orgCode,jdbcType=VARCHAR},
+    FR_NAME = #{frName,jdbcType=VARCHAR},
+      CREATE_TIME = #{c
+    reateTime,jdbcType=TIMESTAMP},
+      COMPLETE_TIME = #{completeTime,jdbcType=TIMESTAMP},
+    MEMBER_NO = #{memberNo,jdbcType=VARCHAR},
+      CERT_CHANNEL = #{certChannel,jdbcType=VARCHAR},
+    ERROR_CODE = #{errorCode,jdbcType=VARCHAR},
+      ERROR_MSG = #{errorMsg,jdbcType=VARCHAR},
+    MANAGE_STATE = #{manageState,jdbcType=VARCHAR},
+      EXTEND_MSG = #{extendMsg,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=NUMERIC}
+  </update>
+</mapper>

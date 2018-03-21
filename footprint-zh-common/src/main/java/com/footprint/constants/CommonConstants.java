@@ -11,4 +11,7 @@ public interface CommonConstants {
     String MAIN_RESOURCE_PATH = "src/main/resources";
 
     String JAVA_SUFFIX = ".java";
+
+    String SUCCESS = "SUCCESS";
+    String FAIL = "FAIL";
 }

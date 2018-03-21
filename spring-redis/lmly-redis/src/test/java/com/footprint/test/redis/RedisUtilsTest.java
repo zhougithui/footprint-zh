@@ -1,12 +1,13 @@
 package com.footprint.test.redis;
 
-import com.footprint.test.redis.vo.Student;
 import com.footprint.redis.RedisUtils;
+import com.footprint.test.redis.vo.Student;
 import com.footprint.utils.GsonUtils;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.util.Assert;
 
 import java.io.IOException;
@@ -25,6 +26,7 @@ public class RedisUtilsTest {
     public static void init(){
         ac = new ClassPathXmlApplicationContext("classpath:spring-redis.xml");
         ac.registerShutdownHook();
+        ac.getBean(JedisConnectionFactory.class);
     }
 
     @AfterClass
@@ -138,5 +140,26 @@ public class RedisUtilsTest {
             seconds++;
         }
         Assert.isNull(RedisUtils.get("expire", String.class), "默认过去设置未生效");
+    }
+
+    @Test
+    public void testUpdate(){
+        Student zmy = new Student();
+        zmy.setAge(10);
+        zmy.setBirthday(new Date());
+        zmy.setName("zh");
+        zmy.setScore(BigDecimal.valueOf(59.5));
+
+        Map<String, Student> map = new HashMap<>();
+        map.put(zmy.getName(), zmy);
+        RedisUtils.hmset("maps", map);
+
+        Map<String, Student> result = RedisUtils.hgetAll("maps", Student.class);
+        Assert.isTrue(result.get(zmy.getName()).getName().equals("zh"), "缓存查询失败");
+
+        zmy.setAge(20);
+        RedisUtils.hmset("maps", map);
+        result = RedisUtils.hgetAll("maps", Student.class);
+        Assert.isTrue(result.get(zmy.getName()).getAge() == 20, "缓存更新失败");
     }
 }

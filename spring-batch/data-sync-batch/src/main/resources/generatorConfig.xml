@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+    <context id="LM_PAY" targetRuntime="MyBatis3">
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+        <jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver"
+                        connectionURL="jdbc:oracle:thin:@172.19.60.158:1521:orcl" userId="LM_PAY" password="123456">
+        </jdbcConnection>
+
+        <javaModelGenerator targetPackage="com.lanmao.data.sync.db.oracle.entity"
+                            targetProject="D:\worksoft\IntelliJIDEA\workspace\footprint-zh\spring-batch\data-sync\src\main\java">
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="mybatis/oracle"
+                         targetProject="D:\worksoft\IntelliJIDEA\workspace\footprint-zh\spring-batch\data-sync\src\main\resources">
+        </sqlMapGenerator>
+
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.lanmao.data.sync.db.oracle.dao"
+                             targetProject="D:\worksoft\IntelliJIDEA\workspace\footprint-zh\spring-batch\data-sync\src\main\java">
+        </javaClientGenerator>
+
+        <table schema="LM_PAY" tableName="T_AUTH_ORDER"
+               domainObjectName="AuthOrderEntity"
+               enableCountByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               enableUpdateByExample="false">
+            <generatedKey column="ID" sqlStatement="select 1 from dual" identity="false"/>
+            <columnOverride column="ID" javaType="java.lang.Long"/>
+            <columnOverride column="CONSUME_TIME" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+        </table>
+
+    </context>
+
+    <!--<context id="LM_PAY_DB2" targetRuntime="MyBatis3">
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+        <jdbcConnection driverClass="com.ibm.db2.jcc.DB2Driver"
+                        connectionURL="jdbc:db2://172.19.60.48:50000/qa" userId="qa" password="123456">
+        </jdbcConnection>
+
+        <javaModelGenerator targetPackage="com.lanmao.data.sync.db.db2.entity"
+                            targetProject="D:\worksoft\IntelliJIDEA\workspace\footprint-zh\spring-batch\data-sync\src\main\java">
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="mybatis/db2"
+                         targetProject="D:\worksoft\IntelliJIDEA\workspace\footprint-zh\spring-batch\data-sync\src\main\resources">
+        </sqlMapGenerator>
+
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.lanmao.data.sync.db.db2.dao"
+                             targetProject="D:\worksoft\IntelliJIDEA\workspace\footprint-zh\spring-batch\data-sync\src\main\java">
+        </javaClientGenerator>
+
+        <table schema="LM_PAY" tableName="T_AUTH_ORDER"
+               domainObjectName="AuthOrderEntity"
+               enableCountByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               enableUpdateByExample="false">
+            <generatedKey column="ID" sqlStatement="select 1 from dual" identity="false"/>
+            <columnOverride column="ID" javaType="java.lang.Long"/>
+            <columnOverride column="CONSUME_TIME" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+        </table>
+
+    </context>-->
+</generatorConfiguration>

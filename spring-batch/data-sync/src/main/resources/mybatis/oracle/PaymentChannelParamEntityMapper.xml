@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lanmao.data.sync.dao.oracle.PaymentChannelParamEntityMapper">
+  <resultMap id="BaseResultMap" type="com.lanmao.data.sync.dao.entity.PaymentChannelParamEntity">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="PAY_COMPANY_ID" jdbcType="DECIMAL" property="payCompanyId" />
+    <result column="PAY_CHANNEL" jdbcType="VARCHAR" property="payChannel" />
+    <result column="PAY_CHANNEL_NAME" jdbcType="VARCHAR" property="payChannelName" />
+    <result column="CHANNEL_TYPE" jdbcType="VARCHAR" property="channelType" />
+    <result column="CHANNEL_SETTING" jdbcType="VARCHAR" property="channelSetting" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="CHANNEL_DETAIL" jdbcType="VARCHAR" property="channelDetail" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, PAY_COMPANY_ID, PAY_CHANNEL, PAY_CHANNEL_NAME, CHANNEL_TYPE, CHANNEL_SETTING, 
+    CREATE_TIME, UPDATE_TIME, CHANNEL_DETAIL
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from LM_PAY.T_PAYMENT_CHANNEL_PARAM
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from LM_PAY.T_PAYMENT_CHANNEL_PARAM
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.lanmao.data.sync.dao.entity.PaymentChannelParamEntity" useGeneratedKeys="false">
+    insert into LM_PAY.T_PAYMENT_CHANNEL_PARAM (ID, PAY_COMPANY_ID, PAY_CHANNEL,
+      PAY_CHANNEL_NAME, CHANNEL_TYPE, CHANNEL_SETTING, 
+      CREATE_TIME, UPDATE_TIME, CHANNEL_DETAIL
+      )
+    values (#{id,jdbcType=DECIMAL}, #{payCompanyId,jdbcType=DECIMAL}, #{payChannel,jdbcType=VARCHAR}, 
+      #{payChannelName,jdbcType=VARCHAR}, #{channelType,jdbcType=VARCHAR}, #{channelSetting,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{channelDetail,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.lanmao.data.sync.dao.entity.PaymentChannelParamEntity" useGeneratedKeys="false">
+    insert into LM_PAY.T_PAYMENT_CHANNEL_PARAM
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      ID,
+      <if test="payCompanyId != null">
+        PAY_COMPANY_ID,
+      </if>
+      <if test="payChannel != null">
+        PAY_CHANNEL,
+      </if>
+      <if test="payChannelName != null">
+        PAY_CHANNEL_NAME,
+      </if>
+      <if test="channelType != null">
+        CHANNEL_TYPE,
+      </if>
+      <if test="channelSetting != null">
+        CHANNEL_SETTING,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="channelDetail != null">
+        CHANNEL_DETAIL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      #{id,jdbcType=DECIMAL},
+      <if test="payCompanyId != null">
+        #{payCompanyId,jdbcType=DECIMAL},
+      </if>
+      <if test="payChannel != null">
+        #{payChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="payChannelName != null">
+        #{payChannelName,jdbcType=VARCHAR},
+      </if>
+      <if test="channelType != null">
+        #{channelType,jdbcType=VARCHAR},
+      </if>
+      <if test="channelSetting != null">
+        #{channelSetting,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="channelDetail != null">
+        #{channelDetail,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lanmao.data.sync.dao.entity.PaymentChannelParamEntity">
+    update LM_PAY.T_PAYMENT_CHANNEL_PARAM
+    <set>
+      <if test="payCompanyId != null">
+        PAY_COMPANY_ID = #{payCompanyId,jdbcType=DECIMAL},
+      </if>
+      <if test="payChannel != null">
+        PAY_CHANNEL = #{payChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="payChannelName != null">
+        PAY_CHANNEL_NAME = #{payChannelName,jdbcType=VARCHAR},
+      </if>
+      <if test="channelType != null">
+        CHANNEL_TYPE = #{channelType,jdbcType=VARCHAR},
+      </if>
+      <if test="channelSetting != null">
+        CHANNEL_SETTING = #{channelSetting,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="channelDetail != null">
+        CHANNEL_DETAIL = #{channelDetail,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lanmao.data.sync.dao.entity.PaymentChannelParamEntity">
+    update LM_PAY.T_PAYMENT_CHANNEL_PARAM
+    set PAY_COMPANY_ID = #{payCompanyId,jdbcType=DECIMAL},
+      PAY_CHANNEL = #{payChannel,jdbcType=VARCHAR},
+      PAY_CHANNEL_NAME = #{payChannelName,jdbcType=VARCHAR},
+      CHANNEL_TYPE = #{channelType,jdbcType=VARCHAR},
+      CHANNEL_SETTING = #{channelSetting,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      CHANNEL_DETAIL = #{channelDetail,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+</mapper>
