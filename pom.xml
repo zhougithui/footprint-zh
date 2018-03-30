@@ -9,7 +9,6 @@
     <modules>
         <module>spring-framework</module>
         <module>spring-boot</module>
-        <module>spring-redis</module>
         <module>java</module>
         <module>spring-mvc</module>
         <module>springfox</module>
