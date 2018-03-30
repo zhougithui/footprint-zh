@@ -10,7 +10,6 @@
         <module>spring-framework</module>
         <module>spring-boot</module>
         <module>spring-redis</module>
-        <module>spring-rabbit</module>
         <module>java</module>
         <module>spring-mvc</module>
         <module>springfox</module>
