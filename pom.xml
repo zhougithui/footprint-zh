@@ -18,7 +18,6 @@
         <module>sharding-jdbc</module>
         <module>dubbo</module>
         <module>footprint-zh-common</module>
-        <module>mybatis</module>
         <module>elasticsearch</module>
     </modules>
 
